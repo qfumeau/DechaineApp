@@ -60,7 +60,7 @@ class LoginScreen extends React.Component {
                         <Text style={{textDecorationLine:'underline',marginBottom:30}}>Mot de passe oublié?</Text>
                     </TouchableHighlight>
                     <Button
-                        onPress={() => this.props.navigation.navigate('Vérrouillage')}
+                        onPress={() => this.props.navigation.navigate('Verrouillage')}
                         title="Connexion"
                         color="#0B9002"
                         />
