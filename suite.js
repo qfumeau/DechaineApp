@@ -5,7 +5,7 @@ import LockScreen from './lock';
 import Test from './test'
 
 export const SuiteScreen = TabNavigator({
-    Vérrouillage: { screen: LockScreen },
+    Verrouillage: { screen: LockScreen },
     Test :{screen:Test}
 },{tabBarPosition:"bottom",
   tabBarOptions:{activeTintColor:'white',
