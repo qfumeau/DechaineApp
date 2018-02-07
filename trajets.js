@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, Text,Image,View,TouchableHighlight,Button,StatusBar, ImageBackground } from 'react-native';
-import PopupDialog, {DialogTitle,MaterialIcons,SlideAnimation} from 'react-native-popup-dialog';
+import { StyleSheet, Text,Image, View,TouchableHighlight,Button,StatusBar, ImageBackground } from 'react-native';
+import PopupDialog, {DialogTitle,SlideAnimation} from 'react-native-popup-dialog';
 
 const slideAnimation=new SlideAnimation({
   slideFrom:'bottom'
 })
 
-class LockScreen extends React.Component {
+class trajetsScreen extends React.Component {
   constructor(props){
     super(props);
     this.state={
@@ -25,8 +25,8 @@ class LockScreen extends React.Component {
             <View style={styles.conatiner3}>
               <View style={styles.container}>
               </View>
-              <View style={{width:'61%',height:50,backgroundColor:'green',opacity:0.5}}>
-                  <Text style={{marginTop:7,marginLeft:20,fontSize:25,fontWeight:'bold',color:'black'}}>Verrouillage</Text>
+              <View style={{width:'61%',height:50,backgroundColor:'#A5D6A7'}}>
+                  <Text style={{backgroundColor:'#A5D6A7',marginTop:7,marginLeft:20,fontSize:25,fontWeight:'bold',color:'white'}}>Tarjets</Text>
               </View>
               <View style={styles.container4}>
                 <TouchableHighlight onPress={()=>this.popupDialog.show()}
@@ -56,10 +56,7 @@ class LockScreen extends React.Component {
                   <Image source={require('./img/cadenasFerme.png')} style={{width:200,height:220}}/>
                 </TouchableHighlight>
               }
-              {this.state.cadenasOuvertVisible && 
-                <Text style={{fontSize:30,fontWeight:'bold',marginTop:30}}>Vélo déverrouillé</Text>||
-                <Text style={{fontSize:30,fontWeight:'bold',marginTop:30}}>Vélo vérrouillé</Text>
-              }
+              <Text style={{fontSize:30,fontWeight:'bold',marginTop:30}}>Vélo déverrouillé</Text>
             </View>
           </ImageBackground>
           <PopupDialog
@@ -87,8 +84,7 @@ const styles=StyleSheet.create({
   container:{
     height:50,
     width:'25%',
-    backgroundColor:'green',
-    opacity:0.5
+    backgroundColor:'#A5D6A7'
   },
   conatiner3:{
     flex:1,
@@ -97,8 +93,7 @@ const styles=StyleSheet.create({
   container4:{
     height:50,
     width:50,
-    backgroundColor:'green',
-    opacity:0.5
+    backgroundColor:'#A5D6A7'
   },
   popupView:{
     flex:1,
@@ -110,4 +105,4 @@ const styles=StyleSheet.create({
     height:520
   }
 })
-module.exports = LockScreen;
+module.exports = trajetsScreen;
