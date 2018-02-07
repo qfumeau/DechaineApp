@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,Image,View,TouchableHighlight,Button,StatusBar, ImageBackground } from 'react-native';
+import { StyleSheet, Text,Image,View,TouchableHighlight,BackHandler,Button,StatusBar, ImageBackground, Alert } from 'react-native';
 import PopupDialog, {DialogTitle,MaterialIcons,SlideAnimation} from 'react-native-popup-dialog';
 
 const slideAnimation=new SlideAnimation({
@@ -7,6 +7,7 @@ const slideAnimation=new SlideAnimation({
 })
 
 class LockScreen extends React.Component {
+  
   constructor(props){
     super(props);
     this.state={
@@ -17,6 +18,10 @@ class LockScreen extends React.Component {
     static navigationOptions = {
       header:null,
     };
+    componentWillMount(){
+      BackHandler.addEventListener('hardwareBackPress', function() {
+        Alert.alert('Coucou');
+      })}
     render() {
       return (
         <View>

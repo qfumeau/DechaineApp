@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View,Button } from 'react-native';
+import { StyleSheet, Text,BackHandler, Alert,View,Button } from 'react-native';
 import {TabNavigator} from 'react-navigation';
 import LockScreen from './lock';
 import StatsScreen from './stats';
@@ -12,6 +12,9 @@ const trajetIcon = (<Icon name="map" size={40} color='black' />)
 const statIcon = (<Icon name="signal" size={40} color='black' />)
 const paramIcon = (<Icon name="gear" size={40} color='black' />)
 
+BackHandler.addEventListener('hardwareBackPress',function(){
+  Alert.alert('coucou')
+});
 export const SuiteScreen = TabNavigator({
     A: { 
       screen: LockScreen ,
