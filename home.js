@@ -1,26 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, StatusBar,Modal,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
-import ModalSignUp from './signUp'
+import ModalSignUp from './Modaux/signUp.js'
+import RecupMdpModal from './Modaux/RecupMdpModal.js';
 
 class LoginScreen extends React.Component {
-    state = {
-        modalVisible: false,
-        modalVisible2:false,
-      };
-    
-      openModal() {
-        this.setState({modalVisible:true});
-      }
-    
-      closeModal() {
-        this.setState({modalVisible:false});
-      }
-      openModalSignUp(){
-          this.setState({modalVisible2:true});
-      }
-      closeModalSignUp(){
-          this.setState({modalVisible2:false});
-      }
     static navigationOptions = {
         header:null
     };
@@ -53,147 +36,15 @@ class LoginScreen extends React.Component {
                         placeholder="Mot de passe"
                         secureTextEntry={true}
                         />
-                    <TouchableHighlight
-                        onPress={() => this.openModal()}
-                        underlayColor={null}
-                        >
-                        <Text style={{textDecorationLine:'underline',marginBottom:30}}>Mot de passe oublié?</Text>
-                    </TouchableHighlight>
+                    <RecupMdpModal/>
                     <Button
                         onPress={() => this.props.navigation.navigate('A')}
                         title="Connexion"
                         color="#0B9002"
                         />
-                    <TouchableHighlight
-                        onPress={()=>this.openModalSignUp()}
-                        underlayColor={null}
-                        >
-                        <Text style={{textDecorationLine:'underline',marginTop:40,color:'white'}}>Créer un compte Dé-chaine</Text>
-                    </TouchableHighlight>
+                    <ModalSignUp/>
                 </KeyboardAvoidingView>
             </ImageBackground>
-            <Modal
-                visible={this.state.modalVisible}
-                animationType={'slide'}
-                onRequestClose={() => this.closeModal()}
-                >
-                <View sytle={styles.modalContent}>
-                    <ImageBackground source={require('./img/lock.png')} 
-                        style={{
-                                    width: '100%',
-                                    height:'110%',
-                                    alignItems: 'center',
-                        }}
-                        >
-                        <Text style={{marginTop:70,fontSize:28,fontFamily:'notoserif',color:'white'}}>Récupération mot de passe</Text>
-                        <Text style={styles.textMdpLost}>
-                            <Text>Entrez votre adresse mail,{"\n"}</Text>
-                            <Text>un nouveau mot de passe{"\n"}</Text>
-                            <Text>      vous sera envoyé.</Text>
-                        </Text>
-                        <TextInput
-                            style={{width: '60%', height:'10%',fontSize:15,color:'white',marginBottom:30,marginTop:20}}
-                            placeholder="Adresse mail"
-                            autoCorrect={false}
-                            keyboardType={'email-address'}
-                            />
-                        <View style={{width:'59%',flex:1,
-                            flexDirection:'row',
-                            maxHeight:35,justifyContent:'center',
-                            alignItems:'center'}}>
-                            <View style={{flex:1,maxWidth:140,paddingLeft:20,
-                                alignItems:'center'}}>
-                                <Button
-                                    onPress={() => this.closeModal()}
-                                    title="Annuler"
-                                    style={{flex:1,marginRight:5,paddingRight:20}}
-                                    color={'grey'}
-                                    />
-                            </View>
-                            <View style={{flex:1,maxWidth:140,
-                                paddingLeft:20,alignItems:'center',}}>
-                                <Button
-                                onPress={() => this.closeModal()}
-                                title="Valider"
-                                />
-                            </View>
-                        </View>
-                        <Image source={require('./img/security3.png')} style={{marginTop:45,width:'30%',height:'15%'}}/>
-                    </ImageBackground>
-                </View>
-            </Modal>
-            <Modal
-                visible={this.state.modalVisible2}
-                animationType={'slide'}
-                onRequestClose={() => this.closeModalSignUp()}
-                backgroundColor={'blue'}       
-                >
-                <ImageBackground source={require('./img/accueil2.png')} 
-                    style={{
-                        width: '100%',
-                        height:'110%',
-                    }}
-                    >
-                    <KeyboardAvoidingView
-                        keyboardVerticalOffset={-150}
-                        style={{width: '100%',
-                        height:'100%',
-                        alignItems: 'center',}}
-                        behavior="position"
-                        contentContainerStyle={{width: '100%',
-                        height:'100%',
-                        alignItems: 'center',}}
-                        >
-                        <Text style={{marginTop:30,marginBottom:30,fontSize:28,fontFamily:'notoserif',color:'white'}}>
-                            <Text>  Bienvenue sur Dé-chaîne{"\n"}</Text>
-                            <Text>l'application pour cyclistes,{"\n"}</Text>
-                            <Text>   qui protège votre vélo</Text>
-                        </Text>
-                        <Text style={styles.textInputs}>Entrez votre adresse mail :</Text>
-                        <TextInput
-                            style={{width: '60%', height:50,fontSize:15,color:'white',marginBottom:30,marginTop:10}}
-                            placeholder="Adresse mail"
-                            autoCorrect={false}
-                            keyboardType={'email-address'}
-                            />
-                        <Text  style={styles.textInputs}>Entrez un mot de passe pour votre compte :</Text>
-                        <TextInput
-                            style={{width: '60%', height:50,fontSize:15,color:'white',marginBottom:30,marginTop:10}}
-                            placeholder="Mot de passe"
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                            />
-                        <Text  style={styles.textInputs}>Confirmez le mot de passe :</Text>
-                        <TextInput
-                            style={{width: '60%', height:50,fontSize:15,color:'white',marginBottom:30,marginTop:10}}
-                            placeholder="Mot de passe"
-                            autoCorrect={false}
-                            secureTextEntry={true}
-                            />
-                        <View style={{width:'59%',flex:1,
-                            flexDirection:'row',
-                            maxHeight:35,justifyContent:'center',
-                            alignItems:'center'}}>
-                            <View style={{flex:1,maxWidth:140,paddingLeft:20,
-                                alignItems:'center'}}>
-                               <Button
-                                    onPress={() => this.closeModalSignUp()}
-                                    title="Annuler"
-                                    style={{flex:1,marginRight:5,paddingRight:20}}
-                                    color={'grey'}
-                                />
-                            </View>
-                            <View style={{flex:1,maxWidth:140,
-                                paddingLeft:20,alignItems:'center',}}>
-                                <Button
-                                    onPress={() => this.closeModalSignUp()}
-                                    title="Valider"
-                                />
-                            </View>
-                        </View>
-                    </KeyboardAvoidingView>
-                </ImageBackground>
-            </Modal>
         </View>   
       );
     }
