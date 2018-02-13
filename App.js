@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View,Button } from 'react-native';
 import {StackNavigator} from 'react-navigation';
-import SuiteScreen from './suite';
-import LoginScreen from './home';
+import SuiteScreen from './Pages/suite';
+import LoginScreen from './Pages/home';
 
 export const SimpleApp = StackNavigator({
   Home:{screen: LoginScreen},

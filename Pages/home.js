@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, StatusBar,Modal,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
-import ModalSignUp from './Modaux/signUp.js'
-import RecupMdpModal from './Modaux/RecupMdpModal.js';
+import ModalSignUp from '../Modaux/signUp.js'
+import RecupMdpModal from '../Modaux/RecupMdpModal.js';
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -11,7 +11,7 @@ class LoginScreen extends React.Component {
       return (
         <View style={styles.container}>
             <StatusBar hidden={true}/>
-            <ImageBackground source={require('./img/flowers.png')} 
+            <ImageBackground source={require('../img/flowers.png')} 
                 style={{
                 width: '100%',
                 height:'110%',
@@ -22,7 +22,7 @@ class LoginScreen extends React.Component {
                     style={styles.container2}
                     behavior="padding"
                     >
-                    <Image source={require('./img/icone.png')} style={{marginTop:60, width: 193, height: 110,marginBottom:40}}/>
+                    <Image source={require('../img/icone.png')} style={{marginTop:60, width: 193, height: 110,marginBottom:40}}/>
                     <Text style={{fontWeight: 'bold',fontSize:18}}>Entrez votre adresse mail :</Text>
                     <TextInput
                         style={{width: '50%', height:50,marginBottom:30,fontSize:15}}
