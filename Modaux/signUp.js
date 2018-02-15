@@ -38,7 +38,7 @@ class ModalSignUp extends React.Component {
                         alignItems: 'center',}}
                         >
                         <Text style={{marginTop:30,marginBottom:30,fontSize:28,fontFamily:'notoserif',color:'white'}}>
-                            <Text>  Bienvenue sur Dé-chaîne{"\n"}</Text>
+                            <Text>  Bienvenue sur Dé-chaîné{"\n"}</Text>
                             <Text>l'application pour cyclistes,{"\n"}</Text>
                             <Text>   qui protège votre vélo</Text>
                         </Text>

@@ -24,7 +24,6 @@ export default class RecupMdpModal extends React.Component {
                     animationType={'slide'}
                     onRequestClose={() => this.closeModal()}
                     >
-                    <View sytle={styles.modalContent}>
                         <ImageBackground source={require('../img/lock.png')} 
                             style={{
                                 width: '100%',
@@ -67,7 +66,6 @@ export default class RecupMdpModal extends React.Component {
                             </View>
                             <Image source={require('../img/security3.png')} style={{marginTop:45,width:'30%',height:'15%'}}/>
                         </ImageBackground>
-                    </View>
                 </Modal>
                 <TouchableHighlight
                 onPress={() => this.openModal()}
@@ -93,10 +91,6 @@ const styles=StyleSheet.create({
         height:'110%',
         alignItems: 'center',
         flex:1,
-    },
-    modalContent: {
-        borderRadius: 500,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     textInputs:{
         color:'white',

@@ -42,7 +42,6 @@ export const SuiteScreen = TabNavigator({
 },{tabBarPosition:"bottom",
   tabBarOptions:{
     pressColor: 'white',
-    activeTintColor:'blue',
     indicatorStyle:{
       backgroundColor:'green',
       opacity:0.9,

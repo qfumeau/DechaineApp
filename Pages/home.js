@@ -9,8 +9,6 @@ class LoginScreen extends React.Component {
     };
     render() {
       return (
-        <View style={styles.container}>
-            <StatusBar hidden={true}/>
             <ImageBackground source={require('../img/flowers.png')} 
                 style={{
                 width: '100%',
@@ -18,14 +16,15 @@ class LoginScreen extends React.Component {
                 alignItems: 'center',
                 }}
                 >
+                <StatusBar hidden={true}/>
                 <KeyboardAvoidingView
                     style={styles.container2}
                     behavior="padding"
                     >
-                    <Image source={require('../img/icone.png')} style={{marginTop:60, width: 193, height: 110,marginBottom:40}}/>
+                    <Image source={require('../img/icone.png')} style={{marginTop:'15%', width: 193, height: 110,marginBottom:'15%'}}/>
                     <Text style={{fontWeight: 'bold',fontSize:18}}>Entrez votre adresse mail :</Text>
                     <TextInput
-                        style={{width: '50%', height:50,marginBottom:30,fontSize:15}}
+                        style={{width: '50%', height:50,marginBottom:'10%',fontSize:15}}
                         placeholder="Adresse mail"
                         keyboardType={'email-address'}
                         autoCorrect={false}
@@ -45,7 +44,6 @@ class LoginScreen extends React.Component {
                     <ModalSignUp/>
                 </KeyboardAvoidingView>
             </ImageBackground>
-        </View>   
       );
     }
 }
@@ -61,10 +59,6 @@ const styles=StyleSheet.create({
         height:'110%',
         alignItems: 'center',
         flex:1,
-    },
-    modalContent: {
-        borderRadius: 500,
-        borderColor: 'rgba(0, 0, 0, 0.1)',
     },
     textInputs:{
         color:'white',

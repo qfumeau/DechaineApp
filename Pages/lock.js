@@ -1,6 +1,10 @@
 import React from 'react';
-import { StyleSheet, Text,Image,View,TouchableHighlight,BackHandler,Button,StatusBar, ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text,Image,View,TouchableHighlight,BackHandler,Button,StatusBar, Dimensions,ImageBackground, Alert } from 'react-native';
 import Header from './header';
+import styles from '../Styles/style.js';
+
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
 
 class LockScreen extends React.Component {
   constructor(props){
@@ -19,9 +23,9 @@ class LockScreen extends React.Component {
       })}
     render() {
       return (
-        <View>
-          <StatusBar hidden={true}/>
-          <ImageBackground source={require('../img/lockScreen.png')} imageStyle={{resizeMode:'cover'}} style={{position:'absolute'}}>
+          <ImageBackground source={require('../img/lockScreen.png')} imageStyle={{resizeMode:'cover'}} style={{width: viewportWidth,
+            height: viewportHeight,}}>
+            <StatusBar hidden={true}/>
             <Header page='Verrouillage'/>
             <View style={styles.cadenasView}>
               {this.state.cadenasOuvertVisible && 
@@ -49,36 +53,9 @@ class LockScreen extends React.Component {
               }
             </View>
           </ImageBackground>
-        </View>
-      );
+        );
     }
 }
 
-const styles=StyleSheet.create({
-  container:{
-    height:50,
-    width:'25%',
-    backgroundColor:'green',
-    opacity:0.5
-  },
-  conatiner3:{
-    flex:1,
-    flexDirection:'row',
-  },
-  container4:{
-    height:50,
-    width:50,
-    backgroundColor:'green',
-    opacity:0.5
-  },
-  popupView:{
-    flex:1,
-    alignItems:'center',
-    justifyContent:'center',
-  },
-  cadenasView:{
-    alignItems:'center',
-    height:520
-  }
-})
+
 module.exports = LockScreen;
