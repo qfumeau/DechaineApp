@@ -100,9 +100,23 @@ module.exports=StyleSheet.create({
     },
     titreTextCard:{
       fontSize:20,
+      marginBottom:'8%'
     },
     vueTextCard:{
       alignItems:'center',
       justifyContent:'center'
+    },
+    textInfo:{
+      alignItems:'center',
+      justifyContent:'center'
+    },
+    sousTitreCarte:{
+      fontSize:15,
+      fontWeight:'bold',
+      marginBottom:'5%'
+    },
+    infoTextCarte:{
+      fontSize:15,
+      fontWeight:'normal'
     }
   })

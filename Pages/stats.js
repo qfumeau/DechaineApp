@@ -7,6 +7,7 @@ import TextDistance from '../TextCard/textDistance.js';
 import TextCalories from '../TextCard/textCalories.js';
 import TextEco from '../TextCard/textEco.js';
 import TextCo2 from '../TextCard/textCo2.js';
+import TextCarte from './TextCartes.js';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -41,7 +42,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoChemin.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backChemin}>
-                  <TextDistance/>
+                  <TextCarte carte="Distance"/>
                 </View>
               </FlipCard>
               <FlipCard
@@ -57,7 +58,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoCoeur.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backCoeur}>
-                  <TextCalories/>
+                  <TextCarte carte="Calories"/>
                 </View>
               </FlipCard>
             </View>
@@ -75,7 +76,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoDollar2.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backEco}>
-                  <TextEco/>
+                  <TextCarte carte="Economies"/>
                 </View>
               </FlipCard>
               <FlipCard
@@ -91,7 +92,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoCo2.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backCo2}>
-                  <TextCo2/>
+                  <TextCarte carte="Co2 évité"/>
                 </View>
               </FlipCard>
             </View>
