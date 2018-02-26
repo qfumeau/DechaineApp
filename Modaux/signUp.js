@@ -1,15 +1,72 @@
 import React,{PropTypes} from 'react';
-import { StyleSheet, Text,StatusBar,Modal,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import { StyleSheet, Text,StatusBar,Modal,TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+
+const adresseMail="";
+const mdp="";
+const mdpVerif="";
 
 class ModalSignUp extends React.Component {
     state = {
         modalVisible2:false,
+        adresseMailText:"",
+        mdpText:"",
+        mdpVerifText:"",
+        mailVide:false,
+        mdpVide:false,
+        mdpVerifVide:false,
       };
       openModalSignUp(){
           this.setState({modalVisible2:true});
       }
       closeModalSignUp(){
           this.setState({modalVisible2:false});
+      }
+      creerCompte(){
+        if(adresseMail!=""&&mdp!=""&&mdpVerif!=""){
+            if(mdp==mdpVerif){
+                let user = {
+                    email : adresseMail,
+                    mdpUser : mdp
+                }
+                AsyncStorage.setItem('user',JSON.stringify(user));
+                Alert.alert(
+                  'Compte ajouté !',
+                  'Félicitation !\n\nVotre compte a été créé avec succès !',
+                  [
+                      {text:'OK',onPress:()=>this.closeModalSignUp()},
+                  ]
+              );
+            }
+            else{
+                Alert.alert(
+                    'Mauvais mot de passe',
+                    'Les deux mots de passes ne correspondent pas.',
+                );
+                this.setState({
+                    mdpVide:true,
+                    mdpVerifVide:true
+                })
+            }
+            
+        }
+        else{
+            Alert.alert(
+                'Champ manquants',
+                'Veuillez saisir tous les champs.',
+            );
+            if(adresseMail==""){
+                this.setState({mailVide:true});
+            }
+            if(mdp==""){
+                this.setState({mdpVide:true});
+            }
+            if(mdpVerif=="")
+            {
+                this.setState({mdpVerifVide:true});
+            }
+        }
+          
+          
       }
     
     render() {
@@ -48,6 +105,15 @@ class ModalSignUp extends React.Component {
                             placeholder="Adresse mail"
                             autoCorrect={false}
                             keyboardType={'email-address'}
+                            onChangeText={(text)=>{
+                                this.setState({adresseMailText:text});
+                                adresseMail=text;
+                                this.setState({mailVide:false})
+                            }}
+                            placeholderTextColor={this.state.mailVide&&'red'||null
+                            }
+                            underlineColorAndroid={this.state.mailVide&&'red'||null
+                            }
                             />
                         <Text  style={styles.textInputs}>Entrez un mot de passe pour votre compte :</Text>
                         <TextInput
@@ -55,6 +121,15 @@ class ModalSignUp extends React.Component {
                             placeholder="Mot de passe"
                             autoCorrect={false}
                             secureTextEntry={true}
+                            onChangeText={(text)=>{
+                                this.setState({mdpText:text});
+                                mdp=text;
+                                this.setState({mdpVide:false})
+                            }}
+                            placeholderTextColor={this.state.mdpVide&&'red'||null
+                            }
+                            underlineColorAndroid={this.state.mdpVide&&'red'||null
+                            }
                             />
                         <Text  style={styles.textInputs}>Confirmez le mot de passe :</Text>
                         <TextInput
@@ -62,6 +137,15 @@ class ModalSignUp extends React.Component {
                             placeholder="Mot de passe"
                             autoCorrect={false}
                             secureTextEntry={true}
+                            onChangeText={(text)=>{
+                                this.setState({mdpVerifText:text});
+                                mdpVerif=text;
+                                this.setState({mdpVerifVide:false})
+                            }}
+                            placeholderTextColor={this.state.mdpVerifVide&&'red'||null
+                            }
+                            underlineColorAndroid={this.state.mdpVerifVide&&'red'||null
+                            }
                             />
                         <View style={{width:'59%',flex:1,
                             flexDirection:'row',
@@ -79,7 +163,7 @@ class ModalSignUp extends React.Component {
                             <View style={{flex:1,maxWidth:140,
                                 paddingLeft:20,alignItems:'center',}}>
                                 <Button
-                                    onPress={() => this.closeModalSignUp()}
+                                    onPress={() => this.creerCompte()}
                                     title="Valider"
                                 />
                             </View>

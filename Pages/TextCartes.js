@@ -31,19 +31,19 @@ export default class TextCarte extends React.Component {
     textS(){
         let chaine1="";
         if(this.props.carte=='Distance'){
-            chaine1 = "8km";
+            chaine1 = "16km";
         }
         else{
             if(this.props.carte=='Calories'){
-                chaine1 = "10kcal";
+                chaine1 = "20kcal";
             }
             else{
                 if(this.props.carte=="Economies"){
-                    chaine1 = "10€";
+                    chaine1 = "20€";
                 }
                 else{
                     if(this.props.carte=="Co2 évité"){
-                        chaine1 = "10kg";
+                        chaine1 = "20kg";
                     }
                     else{
                         return("My bad");
@@ -56,19 +56,19 @@ export default class TextCarte extends React.Component {
     textM(){
         let chaine1="";
         if(this.props.carte=='Distance'){
-            chaine1 = "8km";
+            chaine1 = "24km";
         }
         else{
             if(this.props.carte=='Calories'){
-                chaine1 = "10kcal";
+                chaine1 = "30kcal";
             }
             else{
                 if(this.props.carte=="Economies"){
-                    chaine1 = "10€";
+                    chaine1 = "30€";
                 }
                 else{
                     if(this.props.carte=="Co2 évité"){
-                        chaine1 = "10kg";
+                        chaine1 = "30kg";
                     }
                     else{
                         return("My bad");
@@ -81,19 +81,19 @@ export default class TextCarte extends React.Component {
     textA(){
         let chaine1="";
         if(this.props.carte=='Distance'){
-            chaine1 = "8km";
+            chaine1 = "32km";
         }
         else{
             if(this.props.carte=='Calories'){
-                chaine1 = "10kcal";
+                chaine1 = "40kcal";
             }
             else{
                 if(this.props.carte=="Economies"){
-                    chaine1 = "10€";
+                    chaine1 = "40€";
                 }
                 else{
                     if(this.props.carte=="Co2 évité"){
-                        chaine1 = "10kg";
+                        chaine1 = "40kg";
                     }
                     else{
                         return("My bad");

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet,Alert, Text, StatusBar,Modal,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import { StyleSheet,Alert, Text, StatusBar,Modal,AsyncStorage,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import ModalSignUp from '../Modaux/signUp.js'
 import RecupMdpModal from '../Modaux/RecupMdpModal.js';
 
@@ -19,8 +19,11 @@ class LoginScreen extends React.Component {
             mdpVide:false
         }
     };
-    connexion(){
-        if(adresseMailText==""||mdp==""){
+    connexion=async () =>{
+        try{
+          let util = await AsyncStorage.getItem('user');
+          const user = JSON.parse(util);
+          if(adresseMailText==""||mdp==""){
             Alert.alert('Champ(s) vide(s)',
             "Veuillez compléter tous les champs.",
             [
@@ -34,15 +37,18 @@ class LoginScreen extends React.Component {
             }
         }
         else{
-            if(adresseMailText!="Quentin"||mdp!="a"){
+            if(adresseMailText!=user.email||mdp!=user.mdpUser){
                 Alert.alert("Adresse mail ou mot de passe erroné.")
             }
             else{
                 this.props.navigation.navigate('A')
             }
         }
-        
-    }
+        }
+        catch(error){
+          alert(error);
+        }
+      }
     render() {
       return (
             <ImageBackground source={require('../img/flowers.png')} 
