@@ -1,5 +1,5 @@
 import React,{PropTypes} from 'react';
-import { StyleSheet, Text,StatusBar,Modal,TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import { StyleSheet, Text,StatusBar,Modal, TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 
 const adresseMail="";
 const mdp="";
@@ -110,7 +110,7 @@ class ModalSignUp extends React.Component {
                                 adresseMail=text;
                                 this.setState({mailVide:false})
                             }}
-                            placeholderTextColor={this.state.mailVide&&'red'||null
+                            placeholderTextColor={this.state.mailVide&&'red'||'white'
                             }
                             underlineColorAndroid={this.state.mailVide&&'red'||null
                             }
@@ -126,7 +126,7 @@ class ModalSignUp extends React.Component {
                                 mdp=text;
                                 this.setState({mdpVide:false})
                             }}
-                            placeholderTextColor={this.state.mdpVide&&'red'||null
+                            placeholderTextColor={this.state.mdpVide&&'red'||'white'
                             }
                             underlineColorAndroid={this.state.mdpVide&&'red'||null
                             }
@@ -142,7 +142,7 @@ class ModalSignUp extends React.Component {
                                 mdpVerif=text;
                                 this.setState({mdpVerifVide:false})
                             }}
-                            placeholderTextColor={this.state.mdpVerifVide&&'red'||null
+                            placeholderTextColor={this.state.mdpVerifVide&&'red'||'white'
                             }
                             underlineColorAndroid={this.state.mdpVerifVide&&'red'||null
                             }

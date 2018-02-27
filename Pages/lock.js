@@ -17,10 +17,6 @@ class LockScreen extends React.Component {
     static navigationOptions = {
       header:null,
     };
-    componentWillMount(){
-      BackHandler.addEventListener('hardwareBackPress', function() {
-        Alert.alert('Coucou');
-      })}
     render() {
       return (
           <ImageBackground source={require('../img/lockScreen.png')} imageStyle={{resizeMode:'cover'}} style={{width: viewportWidth,

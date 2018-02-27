@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, StatusBar,Modal,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import { StyleSheet, Text, StatusBar,Alert,Modal,ScrollView,AsyncStorage,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 
 export default class RecupMdpModal extends React.Component {
     static navigationOptions={
@@ -9,13 +9,30 @@ export default class RecupMdpModal extends React.Component {
         modalVisible: false,
       };
     
-      openModal() {
+    openModal() {
         this.setState({modalVisible:true});
+    }
+    
+    closeModal() {
+        this.setState({modalVisible:false});
+    }
+    recupMdp=async () =>{
+        try{
+          let util = await AsyncStorage.getItem('user');
+          const user = JSON.parse(util);
+          Alert.alert(
+            'Compte ajouté !',
+            'Email : '+user.email+'\nMdp : '+user.mdpUser,
+            [
+                {text:'OK',onPress:()=>this.closeModal()},
+            ]
+        );
+        }
+        catch(error){
+          alert(error);
+        }
       }
     
-      closeModal() {
-        this.setState({modalVisible:false});
-      }
     render() {
         return(
             <View>
@@ -59,7 +76,7 @@ export default class RecupMdpModal extends React.Component {
                                 <View style={{flex:1,maxWidth:140,
                                     paddingLeft:20,alignItems:'center',}}>
                                     <Button
-                                        onPress={() => this.closeModal()}
+                                        onPress={() => this.recupMdp()}
                                         title="Valider"
                                         />
                                 </View>
