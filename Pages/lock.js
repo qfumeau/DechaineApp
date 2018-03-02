@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text,Image,View,TouchableHighlight,BackHandler,Button,StatusBar, Dimensions,ImageBackground, Alert } from 'react-native';
+import { StyleSheet, Text,Image,View,ToastAndroid,TouchableHighlight,BackHandler,Button,StatusBar, Dimensions,ImageBackground, Alert } from 'react-native';
 import Header from './header';
 import styles from '../Styles/style.js';
 
@@ -13,6 +13,9 @@ class LockScreen extends React.Component {
       cadenasOuvertVisible:true,
       cadenasFermeVisible:false
     }
+  }
+  componentDidMount(){
+    ToastAndroid.show('Bienvenue sur Dé-chaine !',5000)
   }
     static navigationOptions = {
       header:null,

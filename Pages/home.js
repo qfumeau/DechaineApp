@@ -20,13 +20,20 @@ class LoginScreen extends React.Component {
             mdpVide:false,
             name:"",
             leEmail:"",
-            leMdp:""
+            leMdp:"",
+            bdPleine:true,
         }
     };
     update(){
-        let theUser = JSON.parse(this.state.name);
-        this.setState({leEmail:theUser.email})
-        this.setState({leMdp:theUser.mdpUser})
+        if(this.state.name!=null){
+            let theUser = JSON.parse(this.state.name);
+            this.setState({leEmail:theUser.email})
+            this.setState({leMdp:theUser.mdpUser})
+        }
+        else{
+            this.setState({bdPleine:false})
+        }
+        
     };
     chargerBd() {
         AsyncStorage.getItem('user').then((value)=>this.setState({name:value}));
@@ -36,8 +43,8 @@ class LoginScreen extends React.Component {
         timer.setTimeout('coucou',()=>this.chargerBd(),1);
         timer.setTimeout('le',()=>this.update(),350);
     }
-    component
     connexion=async () =>{
+        if(this.state.bdPleine){
         try{
           let util = await AsyncStorage.getItem('user');
           const user = JSON.parse(util);
@@ -67,6 +74,16 @@ class LoginScreen extends React.Component {
           alert(error);
         }
       }
+      else{
+          Alert.alert(
+            'Pas de compte',
+            "Il n'y a aucun compte enregistré sur votre appareil.\n\nVous pouvez en créer un en allant sur 'Créer un compte Dé-chaine'",
+            [
+                {text:'OK',onPress:()=>this.setState({bdPleine:true})}
+            ]
+            )
+      }
+    }
     render() {
       return (
             <ImageBackground source={require('../img/flowers.png')} 
@@ -84,7 +101,7 @@ class LoginScreen extends React.Component {
                     <Image source={require('../img/icone.png')} style={{marginTop:'15%', width: 193, height: 110,marginBottom:'15%'}}/>
                     <Text style={{fontWeight: 'bold',fontSize:18}}>Entrez votre adresse mail :</Text>
                     <TextInput
-                        defaultValue={this.state.leEmail}
+                        defaultValue={this.state.bdPleine&&this.state.leEmail||""}
                         style={{width: '50%', height:50,fontSize:15}}
                         placeholder="Adresse mail"
                         placeholderTextColor={this.state.mailVide&&'red'||null
@@ -100,7 +117,7 @@ class LoginScreen extends React.Component {
                         />
                     <Text style={{fontWeight: 'bold',fontSize:16,marginTop:'10%'}}>Entrez votre mot de passe :</Text>
                     <TextInput
-                        defaultValue={this.state.leMdp}
+                        defaultValue={this.state.bdPleine&&this.state.leMdp||""}
                         style={{width: '50%', height:50,fontSize:15}}
                         placeholder="Mot de passe"
                         secureTextEntry={true}
