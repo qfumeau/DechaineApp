@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text,Image,View,ToastAndroid,TouchableHighlight,BackHandler,Button,StatusBar, Dimensions,ImageBackground, Alert } from 'react-native';
+import MapView from 'react-native-maps';
 import Header from './header';
 import styles from '../Styles/style.js';
+import Map from '../Modaux/map.js';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -11,7 +13,8 @@ class LockScreen extends React.Component {
     super(props);
     this.state={
       cadenasOuvertVisible:true,
-      cadenasFermeVisible:false
+      cadenasFermeVisible:false,
+      modal:false,
     }
   }
   componentDidMount(){
@@ -59,8 +62,12 @@ class LockScreen extends React.Component {
               <TouchableHighlight
                 style={{width:'90%',height:'30%',marginLeft:'5%',borderColor:'rgba(52, 52, 52, 0.8)',borderWidth:2}}
                 >
-                <Text>Position du mon vélo</Text>
+                <MapView
+                  style={{width:'100%',height:'100%'}}
+                  onPress={()=>this.setState({modal:true})}
+                />
               </TouchableHighlight>
+              {this.state.modal&&<Map ouvert={true}/>}
           </ImageBackground>
         );
     }
