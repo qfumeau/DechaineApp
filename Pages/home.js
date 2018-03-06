@@ -1,11 +1,11 @@
 import React from 'react';
-import { StyleSheet,Alert, Text, StatusBar,Modal,AsyncStorage,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import { StyleSheet,Alert, Text, StatusBar,ActivityIndicator,Modal,AsyncStorage,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import ModalSignUp from '../Modaux/signUp.js'
 import RecupMdpModal from '../Modaux/RecupMdpModal.js';
 import timer from 'react-native-timer';
 
-const adresseMailText="Quentin";
-const mdp="a";
+const adresseMailText="";
+const mdp="";
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -22,6 +22,7 @@ class LoginScreen extends React.Component {
             leEmail:"",
             leMdp:"",
             bdPleine:true,
+            bdCharge:false,
         }
     };
     update(){
@@ -29,60 +30,58 @@ class LoginScreen extends React.Component {
             let theUser = JSON.parse(this.state.name);
             this.setState({leEmail:theUser.email})
             this.setState({leMdp:theUser.mdpUser})
+            adresseMailText=this.state.leEmail
+            mdp=this.state.leMdp
         }
         else{
             this.setState({bdPleine:false})
-        }
-        
-    };
-    chargerBd() {
-        AsyncStorage.getItem('user').then((value)=>this.setState({name:value}));
-        return(0);
+        }};
+    chargerBd= async ()=> {
+        let monUser = await AsyncStorage.getItem('user');
+        this.setState({bdCharge:true});
+        this.setState({name:monUser});
+        this.update();
+        return(monUser);
     }
     componentWillMount=()=>{
-        timer.setTimeout('coucou',()=>this.chargerBd(),1);
-        timer.setTimeout('le',()=>this.update(),350);
+        this.chargerBd();
     }
-    connexion=async () =>{
+    connexion(){
         if(this.state.bdPleine){
-        try{
-          let util = await AsyncStorage.getItem('user');
-          const user = JSON.parse(util);
-          if(adresseMailText==""||mdp==""){
-            Alert.alert('Champ(s) vide(s)',
-            "Veuillez compléter tous les champs.",
-            [
-              {text: 'OK'},
-            ]);
-            if(adresseMailText==""){
-                this.setState({mailVide:true})
+            if(adresseMailText==""||mdp==""){
+                Alert.alert('Champ(s) vide(s)',
+                "Veuillez compléter tous les champs.",
+                [
+                    {text: 'OK'},
+                ]);
+                if(adresseMailText==""){
+                    this.setState({mailVide:true})
+                }
+                if(mdp==""){
+                    this.setState({mdpVide:true})
+                }
             }
-            if(mdp==""){
-                this.setState({mdpVide:true})
+            else{
+                if(adresseMailText!=this.state.leEmail||mdp!=this.state.leMdp){
+                    Alert.alert("Adresse mail ou mot de passe erroné.")
+                }
+                else{
+                    this.props.navigation.navigate('A')
+                }
             }
         }
         else{
-            if(adresseMailText!=user.email||mdp!=user.mdpUser){
-                Alert.alert("Adresse mail ou mot de passe erroné.")
-            }
-            else{
-                this.props.navigation.navigate('A')
-            }
+            Alert.alert(
+                 'Pas de compte',
+                 "Il n'y a aucun compte enregistré sur votre appareil.\n\nVous pouvez en créer un en allant sur 'Créer un compte Dé-chaine'",
+                [
+                    {text:'OK',onPress:()=>this.setState({bdPleine:true})}
+                ]
+                )
         }
-        }
-        catch(error){
-          alert(error);
-        }
-      }
-      else{
-          Alert.alert(
-            'Pas de compte',
-            "Il n'y a aucun compte enregistré sur votre appareil.\n\nVous pouvez en créer un en allant sur 'Créer un compte Dé-chaine'",
-            [
-                {text:'OK',onPress:()=>this.setState({bdPleine:true})}
-            ]
-            )
-      }
+    }
+    connexion2(){
+        this.props.navigation.navigate('A')
     }
     render() {
       return (
@@ -99,6 +98,7 @@ class LoginScreen extends React.Component {
                     behavior="padding"
                     >
                     <Image source={require('../img/icone.png')} style={{marginTop:'15%', width: 193, height: 110,marginBottom:'15%'}}/>
+                    {this.state.bdCharge||<ActivityIndicator color="grey" size='large'/>}
                     <Text style={{fontWeight: 'bold',fontSize:18}}>Entrez votre adresse mail :</Text>
                     <TextInput
                         defaultValue={this.state.bdPleine&&this.state.leEmail||""}
