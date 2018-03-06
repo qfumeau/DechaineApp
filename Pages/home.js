@@ -135,6 +135,7 @@ class LoginScreen extends React.Component {
                         onPress={() => this.connexion()}
                         title="Connexion"
                         color="#0B9002"
+                        disabled={!this.state.bdCharge}
                         />
                     <ModalSignUp/>
                 </KeyboardAvoidingView>

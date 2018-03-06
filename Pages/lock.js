@@ -28,7 +28,7 @@ class LockScreen extends React.Component {
             <Header page='Verrouillage'/>
             <View style={styles.cadenasView}>
               {this.state.cadenasOuvertVisible && 
-                <TouchableHighlight style={{marginTop:50}} 
+                <TouchableHighlight
                   onPress={()=>{this.setState({
                     cadenasFermeVisible:true})
                     this.setState({cadenasOuvertVisible:false})
@@ -37,7 +37,7 @@ class LockScreen extends React.Component {
                     >
                   <Image source={require('../img/cadenasOuvert.png')} style={{width:200,height:220,}}/>
                 </TouchableHighlight> ||
-                <TouchableHighlight style={{marginTop:50}}
+                <TouchableHighlight
                   onPress={()=>{this.setState({
                   cadenasFermeVisible:false})
                   this.setState({cadenasOuvertVisible:true})
@@ -51,6 +51,16 @@ class LockScreen extends React.Component {
                 <Text style={{fontSize:30,fontWeight:'bold',marginTop:30}}>Vélo verrouillé</Text>
               }
             </View>
+              <TouchableHighlight
+                style={{width:'90%',justifyContent:'center',height:'7%',backgroundColor:'rgba(52, 52, 52, 0.8)',marginLeft:'5%',alignItems:'center'}}
+                >
+                <Text style={{fontSize:25,color:'white',opacity:1,fontWeight:'bold'}}>Position de mon vélo</Text>
+              </TouchableHighlight>
+              <TouchableHighlight
+                style={{width:'90%',height:'30%',marginLeft:'5%',borderColor:'rgba(52, 52, 52, 0.8)',borderWidth:2}}
+                >
+                <Text>Position du mon vélo</Text>
+              </TouchableHighlight>
           </ImageBackground>
         );
     }

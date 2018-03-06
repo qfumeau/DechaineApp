@@ -31,8 +31,8 @@ module.exports=StyleSheet.create({
     },
     cadenasView:{
       alignItems:'center',
-      marginTop:'15%',
-      height:520,
+      marginTop:'1%',
+      height:'50%',
     },
     touchableHighlight:{
         height:100,
