@@ -11,7 +11,6 @@ export default class Map extends React.Component {
   }
     render() {
       return (
-        
         <Modal
           transparent={true}
           animationType={'fade'}
@@ -19,7 +18,15 @@ export default class Map extends React.Component {
           onRequestClose={() => this.closeModal()}
           >
           <View style={{flex:1,alignItems:'center',justifyContent:'center',backgroundColor:'rgba(25,25,25,0.5)'}}>
-            <MapView style={{width:'80%',height:'80%'}}/>
+            <MapView style={{width:'80%',height:'80%'}}
+              initialRegion={this.props.myPosition}
+              >
+              <MapView.Marker
+                        coordinate={this.props.positionMarker}
+                        title={"title"}
+                        description={"description"}
+                    />
+            </MapView>
             <TouchableHighlight 
               onPress={()=>this.closeModal()} 
               style={{width:'50%',backgroundColor:'grey',alignItems:'center',marginTop:'10%',borderRadius:20}}
