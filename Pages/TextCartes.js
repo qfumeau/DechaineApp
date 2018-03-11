@@ -1,126 +1,85 @@
 import React from 'react';
-import { StyleSheet, Text, View,TextInput, } from 'react-native';
+import { StyleSheet, Text, View,TextInput,ActivityIndicator } from 'react-native';
 import styles from '../Styles/style.js';
+import * as firebase from 'firebase';
+
+require('../ConnexionBD.js');
+const J=null;
+const S=null;
+const M=null;
+const T=null;
 
 export default class TextCarte extends React.Component {
-    textJ(){
-        let chaine1="";
-        if(this.props.carte=='Distance'){
-            chaine1 = "8km";
-        }
-        else{
-            if(this.props.carte=='Calories'){
-                chaine1 = "10kcal";
-            }
-            else{
-                if(this.props.carte=="Economies"){
-                    chaine1 = "10€";
-                }
-                else{
-                    if(this.props.carte=="Co2 évité"){
-                        chaine1 = "10kg";
-                    }
-                    else{
-                        return("My bad");
-                    }
-                }
-            }
-        }
-        return(chaine1)
+    state={
+        chargeOk:false
     }
-    textS(){
-        let chaine1="";
-        if(this.props.carte=='Distance'){
-            chaine1 = "16km";
+    componentWillMount=async()=>{
+        try {
+            let leUid = firebase.auth().currentUser.uid
+            let database = firebase.database();
+            database.ref(leUid+"/"+this.props.code).on('value',
+            (data)=>{
+                J=data.val().Jour,
+                S=data.val().Semaine,
+                M=data.val().Mois,
+                T=data.val().Total
+                this.setState({chargeOk:true})
+            })
+            
+        } 
+        catch (error) {
+            console.log(error.toString())
         }
-        else{
-            if(this.props.carte=='Calories'){
-                chaine1 = "20kcal";
-            }
-            else{
-                if(this.props.carte=="Economies"){
-                    chaine1 = "20€";
-                }
-                else{
-                    if(this.props.carte=="Co2 évité"){
-                        chaine1 = "20kg";
-                    }
-                    else{
-                        return("My bad");
-                    }
-                }
-            }
-        }
-        return(chaine1)
     }
-    textM(){
-        let chaine1="";
-        if(this.props.carte=='Distance'){
-            chaine1 = "24km";
+    addUnity(){
+        if(this.props.code=="Distance"){
+            return(" km");
         }
         else{
-            if(this.props.carte=='Calories'){
-                chaine1 = "30kcal";
+            if(this.props.code=="Eco"){
+                return(" €");
             }
             else{
-                if(this.props.carte=="Economies"){
-                    chaine1 = "30€";
+                if(this.props.code=="Cal"){
+                    return(" kCal");
                 }
                 else{
-                    if(this.props.carte=="Co2 évité"){
-                        chaine1 = "30kg";
+                    if(this.props.code=="Co2"){
+                        return(" kg");
                     }
                     else{
-                        return("My bad");
+                        return("")
                     }
                 }
             }
         }
-        return(chaine1)
-    }
-    textA(){
-        let chaine1="";
-        if(this.props.carte=='Distance'){
-            chaine1 = "32km";
-        }
-        else{
-            if(this.props.carte=='Calories'){
-                chaine1 = "40kcal";
-            }
-            else{
-                if(this.props.carte=="Economies"){
-                    chaine1 = "40€";
-                }
-                else{
-                    if(this.props.carte=="Co2 évité"){
-                        chaine1 = "40kg";
-                    }
-                    else{
-                        return("My bad");
-                    }
-                }
-            }
-        }
-        return(chaine1)
     }
     render() {
-        return(  
-            <View style={styles.vueTextCard}>
-                <Text style={styles.titreTextCard}>{this.props.carte}</Text>
-                <Text style={styles.sousTitreCarte}>Journée :  
-                    <Text style={styles.infoTextCarte}>
-                        {this.textJ()}
+        return(
+            <View> 
+                {this.state.chargeOk&&
+                <View style={styles.vueTextCard}>
+                    <Text style={styles.titreTextCard}>{this.props.carte}</Text>
+                    <Text style={styles.sousTitreCarte}>Journée :  
+                        <Text style={styles.infoTextCarte}>
+                            {" "+J+this.addUnity()}
+                        </Text>
                     </Text>
-                </Text>
-                <Text style={styles.sousTitreCarte}>Semaine :  
-                    <Text style={styles.infoTextCarte}>{this.textS()}</Text>
-                </Text>
-                <Text style={styles.sousTitreCarte}>Mois :  
-                    <Text style={styles.infoTextCarte}>{this.textM()}</Text>
-                </Text>
-                <Text style={styles.sousTitreCarte}>Tout :  
-                    <Text style={styles.infoTextCarte}>{this.textA()}</Text>
-                </Text>
+                    <Text style={styles.sousTitreCarte}>Semaine :  
+                        <Text style={styles.infoTextCarte}>{" "+S+this.addUnity()}</Text>
+                    </Text>
+                    <Text style={styles.sousTitreCarte}>Mois :  
+                        <Text style={styles.infoTextCarte}>{" "+M+this.addUnity()}</Text>
+                    </Text>
+                    <Text style={styles.sousTitreCarte}>Tout :  
+                        <Text style={styles.infoTextCarte}>{" "+T+this.addUnity()}</Text>
+                    </Text>
+                </View>||
+                <View style={{marginTop:'30%',justifyContent:'center',alignItems:'center'}}>
+                    <ActivityIndicator size="large" color="green"/>
+                    <Text>Chargement</Text>
+                </View>
+                }
             </View>
         );
     }

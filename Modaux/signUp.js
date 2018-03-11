@@ -1,9 +1,11 @@
 import React,{PropTypes} from 'react';
 import { StyleSheet, Text,StatusBar,Modal, TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import * as firebase from 'firebase';
 
-const adresseMail="";
-const mdp="";
-const mdpVerif="";
+const FireBase = require('../ConnexionBD.js');
+const adresseMail=null;
+const mdp=null;
+const mdpVerif=null;
 
 class ModalSignUp extends React.Component {
     state = {
@@ -21,53 +23,74 @@ class ModalSignUp extends React.Component {
       closeModalSignUp(){
           this.setState({modalVisible2:false});
       }
-      creerCompte(){
-        if(adresseMail!=""&&mdp!=""&&mdpVerif!=""){
+     creerCompte=async ()=>{
+        if(adresseMail&&mdp&&mdpVerif){
             if(mdp==mdpVerif){
-                let user = {
-                    email : adresseMail,
-                    mdpUser : mdp
+                try {
+                    await firebase.auth().createUserWithEmailAndPassword(adresseMail, mdp);
+                    Alert.alert(
+                        'Compte ajouté !',
+                        'Félicitation !\n\nVotre compte a été créé avec succès !',
+                        [
+                            {text:'OK',onPress:()=>this.closeModalSignUp()},
+                        ]
+                    );
+                    let monUid=firebase.auth().currentUser.uid;
+                    let chaine={
+                        Jour:{
+                            j1:0
+                        },
+                        Semaine:{
+                            s1:0
+                        },
+                        Mois:{
+                            m1:0
+                        },
+                        Total:{
+                            t1:0
+                        }
+                    }
+                    firebase.database().ref(monUid+"/Cal").set(chaine);
+                    firebase.database().ref(monUid+"/Eco").set(chaine);
+                    firebase.database().ref(monUid+"/Distance").set(chaine);
+                    firebase.database().ref(monUid+"/Co2").set(chaine);
+            
                 }
-                AsyncStorage.setItem('user',JSON.stringify(user));
-                Alert.alert(
-                  'Compte ajouté !',
-                  'Félicitation !\n\nVotre compte a été créé avec succès !',
-                  [
-                      {text:'OK',onPress:()=>this.closeModalSignUp()},
-                  ]
-              );
+                catch (error) {
+                    if(error.toString()=="Error: The email address is badly formatted."){
+                        alert('Adresse email invalide')
+                    }
+                    if(error.toString()=='Error: Password should be at least 6 characters'){
+                        alert('le mdp doit contenir au moins 6 caractères')
+                    }
+                    console.log(error.toString())
+                }
             }
             else{
                 Alert.alert(
                     'Mauvais mot de passe',
                     'Les deux mots de passes ne correspondent pas.',
                 );
-                this.setState({
-                    mdpVide:true,
-                    mdpVerifVide:true
-                })
-            }
-            
-        }
-        else{
-            Alert.alert(
-                'Champ manquants',
-                'Veuillez saisir tous les champs.',
-            );
-            if(adresseMail==""){
-                this.setState({mailVide:true});
-            }
-            if(mdp==""){
                 this.setState({mdpVide:true});
-            }
-            if(mdpVerif=="")
-            {
                 this.setState({mdpVerifVide:true});
             }
         }
-          
-          
-      }
+        else{
+            Alert.alert(
+            'Champ manquants',
+            'Veuillez saisir tous les champs.',
+            );
+            if(!adresseMail){
+                this.setState({mailVide:true})
+            }
+            if(!mdp){
+                this.setState({mdpVide:true})
+            }
+            if(!mdpVerif){
+                this.setState({mdpVerifVide:true})
+            }
+        }
+    }
     
     render() {
       return (
@@ -163,7 +186,7 @@ class ModalSignUp extends React.Component {
                             <View style={{flex:1,maxWidth:140,
                                 paddingLeft:20,alignItems:'center',}}>
                                 <Button
-                                    onPress={() => this.creerCompte()}
+                                    onPress={() =>this.creerCompte()}
                                     title="Valider"
                                 />
                             </View>

@@ -3,9 +3,11 @@ import { StyleSheet,Alert, Text, StatusBar,ActivityIndicator,Modal,AsyncStorage,
 import ModalSignUp from '../Modaux/signUp.js'
 import RecupMdpModal from '../Modaux/RecupMdpModal.js';
 import timer from 'react-native-timer';
+import * as firebase from 'firebase';
 
-const adresseMailText="";
-const mdp="";
+const adresseMailText="quentin.fumeau@gmail.com";
+const mdp="123456";
+const FireBase = require('../ConnexionBD.js')
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -44,9 +46,10 @@ class LoginScreen extends React.Component {
         return(monUser);
     }
     componentWillMount=()=>{
-        this.chargerBd();
+        this.setState({bdCharge:true})
+        //this.chargerBd();
     }
-    connexion(){
+    connexion=async()=>{
         if(this.state.bdPleine){
             if(adresseMailText==""||mdp==""){
                 Alert.alert('Champ(s) vide(s)',
@@ -62,11 +65,25 @@ class LoginScreen extends React.Component {
                 }
             }
             else{
-                if(adresseMailText!=this.state.leEmail||mdp!=this.state.leMdp){
-                    Alert.alert("Adresse mail ou mot de passe erroné.")
-                }
-                else{
+                try{
+                    await firebase.auth().signInWithEmailAndPassword(adresseMailText, mdp);
                     this.props.navigation.navigate('A')
+                }
+                catch(error){
+                    console.log(error.toString())
+                    if(error.toString()=="Error: The email address is badly formatted."){
+                        alert('Adresse mail invalide')
+                    }
+                    if(error.toString()=="Error: Password should be at least 6 characters."){
+                        alert('Le mot de passe doit contenir au moins 6 caractères')
+                    }
+                    if(error.toString()=="There is no user record corresponding to this identifier. The user may have been deleted."){
+                        alert('Cet utilisateur n\'existe pas')
+                    }
+                    if(error.toString()=="Error: The password is invalid or the user does not have a password."){
+                        alert('Mot de passe incorrect')
+                    }
+
                 }
             }
         }

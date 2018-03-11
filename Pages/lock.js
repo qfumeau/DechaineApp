@@ -109,7 +109,7 @@ class LockScreen extends React.Component {
                 onPress={()=>this.setState({modal:true})}
                 >
                 {this.state.showCarte && 
-                  <MapView style={{width:"100%",height:'70%'}}
+                  <MapView style={{width:"100%",height:'80%'}}
                     initialRegion={maPosition}
                   >
                     <MapView.Marker
@@ -118,7 +118,7 @@ class LockScreen extends React.Component {
                         description={"description"}
                     />
                   </MapView>
-                  ||<View>
+                  ||<View style={{alignItems:'center'}}>
                   <ActivityIndicator size="large" color="green"/>
                   <Text>Waiting map</Text>
                 </View>

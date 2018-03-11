@@ -42,7 +42,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoChemin.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backChemin}>
-                  <TextCarte carte="Distance"/>
+                  <TextCarte carte="Distance" code="Distance"/>
                 </View>
               </FlipCard>
               <FlipCard
@@ -58,7 +58,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoCoeur.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backCoeur}>
-                  <TextCarte carte="Calories"/>
+                  <TextCarte carte="Calories" code="Cal"/>
                 </View>
               </FlipCard>
             </View>
@@ -76,7 +76,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoDollar2.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backEco}>
-                  <TextCarte carte="Economies"/>
+                  <TextCarte carte="Economies" code="Eco"/>
                 </View>
               </FlipCard>
               <FlipCard
@@ -92,7 +92,7 @@ class StatScreen extends React.Component {
                   <Image source={require('../img/logoCo2.png')} style={styles.logos} />
                 </View>
                 <View style={styles.backCo2}>
-                  <TextCarte carte="Co2 évité"/>
+                  <TextCarte carte="Co2 évité" code="Co2"/>
                 </View>
               </FlipCard>
             </View>
