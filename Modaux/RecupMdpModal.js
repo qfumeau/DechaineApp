@@ -1,5 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, StatusBar,Alert,Modal,ScrollView,AsyncStorage,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
+import * as firebase from 'firebase';
+
+require('../ConnexionBD.js');
+const adresseMail=null;
 
 export default class RecupMdpModal extends React.Component {
     static navigationOptions={
@@ -7,6 +11,7 @@ export default class RecupMdpModal extends React.Component {
     }
     state = {
         modalVisible: false,
+        adresseMailState:""
       };
     
     openModal() {
@@ -16,7 +21,7 @@ export default class RecupMdpModal extends React.Component {
     closeModal() {
         this.setState({modalVisible:false});
     }
-    recupMdp=async () =>{
+    recupMdp2=async () =>{
         try{
           let util = await AsyncStorage.getItem('user');
           const user = JSON.parse(util);
@@ -31,9 +36,26 @@ export default class RecupMdpModal extends React.Component {
         catch(error){
           alert(error);
         }
-      }
+    }
+    recupMdp(){
+        if(adresseMail){
+            firebase.auth().sendPasswordResetEmail(adresseMail).then(()=>alert('Mail envoyé !')).catch((error)=>{
+                if(error.toString()=="Error: The email address is badly formatted."){
+                    alert('Adresse mail invalide')
+                }
+                else{
+                    alert(error)
+                }
+            });
+        }
+        else{
+            Alert.alert('Champ vide',
+            'Veuillez saisir une adresse mail'
+        )
+        }
+    }
     
-    render() {
+      render() {
         return(
             <View>
                 <Modal
@@ -58,6 +80,11 @@ export default class RecupMdpModal extends React.Component {
                                 style={{width: '60%', height:'10%',fontSize:15,color:'white',marginBottom:30,marginTop:20}}
                                 placeholder="Adresse mail"
                                 autoCorrect={false}
+                                onChangeText={
+                                    (text)=>{
+                                        this.setState({adresseMailState:text}),
+                                        adresseMail=text
+                                    }}
                                 keyboardType={'email-address'}
                                 />
                             <View style={{width:'59%',flex:1,
