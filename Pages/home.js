@@ -128,7 +128,7 @@ class LoginScreen extends React.Component {
                         underlineColorAndroid={this.state.mailVide&&'red'||null
                         }
                         onChangeText={(text)=>{
-                            this.setState({mailAddress:text});
+                            //this.setState({mailAddress:text});
                             adresseMailText=text;
                         }}
                         />
@@ -143,7 +143,7 @@ class LoginScreen extends React.Component {
                         underlineColorAndroid={this.state.mdpVide&&'red'||null
                         }
                         onChangeText={(text)=>{
-                            this.setState({leMdp:text});
+                            //this.setState({leMdp:text});
                             mdp=text;
                         }}    
                         />

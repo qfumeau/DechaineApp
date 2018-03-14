@@ -118,5 +118,15 @@ module.exports=StyleSheet.create({
     infoTextCarte:{
       fontSize:15,
       fontWeight:'normal'
+    },
+    creerTrajetButton:{
+      alignItems:'center',
+      marginTop:'5%',
+      marginBottom:'5%'
+    },
+    creerTrajetText:{
+      fontSize:20,
+      color:'black',
+      textDecorationLine:'underline'
     }
   })

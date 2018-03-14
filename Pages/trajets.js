@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, Text,Image, ScrollView ,View,TouchableHighlight,Dimensions,Button,StatusBar, ImageBackground } from 'react-native';
 import Header from './header';
 import styles from '../Styles/style.js';
+import ModalTrajet from '../Modaux/modalTrajet.js';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
@@ -23,6 +24,7 @@ class trajetsScreen extends React.Component {
             <StatusBar hidden={true}/>
             <Header page='Trajets'/>
             <ScrollView>
+              <ModalTrajet/>
               <TouchableHighlight style={styles.touchableHighlight}>
                 <Text>Trajet 1</Text>
               </TouchableHighlight>

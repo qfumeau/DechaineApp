@@ -24,6 +24,7 @@
     "firebase": "^4.11.0",
     "react": "16.2.0",
     "react-native": "0.52.0",
+    "react-native-calendars": "^1.17.4",
     "react-native-drawer-layout": "^2.0.0",
     "react-native-flip-card": "^3.5.2",
     "react-native-fontawesome": "^5.7.0",
