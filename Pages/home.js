@@ -46,6 +46,7 @@ class LoginScreen extends React.Component {
         return(monUser);
     }
     componentWillMount=()=>{
+        //this.props.navigation.navigate('A')
         this.setState({bdCharge:true})
         //this.chargerBd();
     }
