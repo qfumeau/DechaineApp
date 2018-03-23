@@ -1,19 +1,21 @@
 import React from 'react';
-import { StyleSheet, Text,Image, Modal ,View,TouchableHighlight,Dimensions,Picker,Button, ImageBackground } from 'react-native';
+import { StyleSheet, Text,Image, Modal ,View,TouchableHighlight,Dimensions,Alert,Picker,Button, ImageBackground } from 'react-native';
 import styles from '../Styles/style.js';
 import { TextInput } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 import DateTimePicker  from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
+
 require('../ConnexionBD.js')
-const lesKm="";
-const lesM="";
-const lesH="";
-const lesMin="";
-const duree="";
-const distance="";
-const maDate="";
+const lesKm="0";
+const lesM="0";
+const lesH="0";
+const lesMin="0";
+const duree="0";
+const distance="0";
+const maDate=new Date();
 const calendarIcon = (<Icon name="calendar" size={40} color='black' />)
 const data = [];
 for(let i=0;i<100;i++){
@@ -34,31 +36,25 @@ export default class ModalTrajet extends React.Component {
   }
   infos(){
     let distance=""+(lesKm)+","+lesM;
-    let duree=""+lesH+"'"+lesMin;
-    if(distance!=""&&duree!=""&&maDate!=""){
-      let userId = firebase.auth().currentUser.uid;
-      let date = maDate.getDate()+","+(maDate.getMonth()+1)+","+maDate.getFullYear();
-      let trajet={
-        dist : distance,
-        time : duree,
-        day : date
-      };
-      try{
-        //firebase.database().ref(userId+"/Cal/").update({Jour:5000000000});
-        firebase.database().ref(userId).push(trajet);
-        Alert.alert('Trajet',
+    let userId = firebase.auth().currentUser.uid;
+    let date = maDate.getDate()+","+(maDate.getMonth()+1)+","+maDate.getFullYear();
+    let trajet={
+      dist : distance,
+      time : duree,
+      day : date
+    };
+    try{
+      //firebase.database().ref(userId+"/Cal/").update({Jour:5000000000});
+      firebase.database().ref(userId+"/Trajets").push(trajet);
+      Alert.alert('Trajet',
         'Votre trajet a bien été ajouté !',
         [
           {text:'OK',onPress:()=>this.setState({modalVisible:false})}
         ]
       )
-      }
-      catch(error){
-        console.log(error)
-      }
     }
-    else{
-      alert('Faut tout remplir !')
+    catch(error){
+      console.log(error)
     }
   }
   pickerKm(){
@@ -99,7 +95,10 @@ export default class ModalTrajet extends React.Component {
       return (
         <View>
           <Modal visible={this.state.modalVisible}
+            onRequestClose={()=>this.setState({modalVisible:false})}
             >
+            <ImageBackground source={require('../img/trip.png')} imageStyle={{resizeMode:'cover'}} style={{width: viewportWidth,
+            height: viewportHeight,}}>
             <View style={{alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:30,marginTop:'15%',marginBottom:'5%'}}>Ajouter un trajet</Text>
               <Text style={{fontSize:20}}>Renseignez les informations du trajet</Text>
@@ -189,6 +188,7 @@ export default class ModalTrajet extends React.Component {
                 </View>
               </View>
             </View>
+            </ImageBackground>
           </Modal>
           <TouchableHighlight style={styles.creerTrajetButton}
             onPress={()=>this.setState({modalVisible:true})}
