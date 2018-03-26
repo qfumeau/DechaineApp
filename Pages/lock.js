@@ -5,6 +5,9 @@ import Header from './header';
 import styles from '../Styles/style.js';
 import Map from '../Modaux/map.js';
 import {Constants, Location, Permissions } from 'expo';
+import * as firebase from 'firebase';
+
+require('../ConnexionBD.js');
 
 const state = {
   modal:false
@@ -47,6 +50,13 @@ class LockScreen extends React.Component {
     } else {
       this.getLocationAsync();
     }
+    /*BackHandler.addEventListener('hardwareBackPress', function() {
+      firebase.auth().signOut().then(function() {
+        console.log('on se casse')
+      }).catch(function(error) {
+        console.log(error)
+      });
+    });*/
   }
   componentDidMount(){
     ToastAndroid.show('Bienvenue sur Dé-chaine !',5000)
@@ -140,7 +150,7 @@ class LockScreen extends React.Component {
                 </View>
                 }
               </TouchableHighlight>
-              {this.state.modal&&<Map positionMarker={markerPosition} activeModal={()=>this.test()} myPosition={maPosition} ouvert={true}/>}
+              {this.state.modal&&<Map positionMarker={markerPosition} mapCharge={this.state.showCarte} activeModal={()=>this.test()} myPosition={maPosition} ouvert={true}/>}
           </ImageBackground>
         );
     }

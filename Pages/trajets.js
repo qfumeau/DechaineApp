@@ -4,7 +4,6 @@ import Header from './header';
 import styles from '../Styles/style.js';
 import ModalTrajet from '../Modaux/modalTrajet.js';
 import * as firebase from 'firebase';
-import { TextInput } from 'react-native-gesture-handler';
 
 require('../ConnexionBD.js');
 
@@ -39,6 +38,10 @@ class trajetsScreen extends React.Component {
     catch(error){
       alert(error.toString())
     }
+  }
+  componentWillUnmount(){
+    listKey=[];
+    listTrajets=[];
   }
   maFonction(){
     if(this.state.bdcharge){
