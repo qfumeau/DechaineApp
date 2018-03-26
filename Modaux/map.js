@@ -1,13 +1,22 @@
 import React,{PropTypes} from 'react';
 import { StyleSheet, Text,StatusBar,Modal, TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import MapView from 'react-native-maps';
+import LockScreen from '../Pages/lock.js';
 
 export default class Map extends React.Component {
+  constructor(props){
+    super(props);
+  }
   state={
     modalVisible:this.props.ouvert
   }
+  
   closeModal(){
     this.setState({modalVisible:false});
+    this.props.activeModal();
+  }
+  test(){
+    console.log('coucou');
   }
     render() {
       return (
@@ -23,6 +32,7 @@ export default class Map extends React.Component {
               >
               <MapView.Marker
                         coordinate={this.props.positionMarker}
+                        image={require('../img/markerBike.png')}
                         title={"title"}
                         description={"description"}
                     />

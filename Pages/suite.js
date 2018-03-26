@@ -6,7 +6,6 @@ import StatsScreen from './stats';
 import TrajetsScreen from './trajets';
 import ParamScreen from './param';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
 const lockIcon = (<Icon name="lock" size={40} color='black' />)
 const trajetIcon = (<Icon name="map" size={40} color='black' />)
 const statIcon = (<Icon name="signal" size={40} color='black' />)

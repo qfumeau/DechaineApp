@@ -103,7 +103,7 @@ class LoginScreen extends React.Component {
     }
     render() {
       return (
-            <ImageBackground source={require('../img/flowers2.png')} 
+            <ImageBackground source={require('../img/flowers.png')} 
                 style={{
                 width: '100%',
                 height:'110%',

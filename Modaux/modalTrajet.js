@@ -35,7 +35,8 @@ export default class ModalTrajet extends React.Component {
     min:0
   }
   infos(){
-    let distance=""+(lesKm)+","+lesM;
+    distance=""+(lesKm*1000+lesM)
+    duree = ""+(lesH*60+lesMin);
     let userId = firebase.auth().currentUser.uid;
     let date = maDate.getDate()+","+(maDate.getMonth()+1)+","+maDate.getFullYear();
     let trajet={
@@ -43,24 +44,32 @@ export default class ModalTrajet extends React.Component {
       time : duree,
       day : date
     };
-    try{
-      //firebase.database().ref(userId+"/Cal/").update({Jour:5000000000});
-      firebase.database().ref(userId+"/Trajets").push(trajet);
-      Alert.alert('Trajet',
-        'Votre trajet a bien été ajouté !',
-        [
-          {text:'OK',onPress:()=>this.setState({modalVisible:false})}
-        ]
-      )
+    if(distance!="00"&&duree!="00"){
+      try{
+        //firebase.database().ref(userId+"/Cal/").update({Jour:5000000000});
+        firebase.database().ref(userId+"/Trajets").push(trajet);
+        Alert.alert('Trajet',
+          'Votre trajet a bien été ajouté !',
+          [
+            {text:'OK',onPress:()=>this.setState({modalVisible:false})}
+          ]
+        )
+      }
+      catch(error){
+        console.log(error)
+      }
     }
-    catch(error){
-      console.log(error)
+    else{
+      alert("Champs vides")
     }
+  }
+  componentWillMount(){
+    
   }
   pickerKm(){
     const nbKm=[];
     for(i=0;i<=100;i++){
-      nbKm.push(<Picker.Item label={""+i+" kilomères"} value={i} key={i}/>)
+      nbKm.push(<Picker.Item label={""+i+" kilomètres"} value={i} key={i}/>)
     }
     return nbKm;
   }

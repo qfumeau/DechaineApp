@@ -37,18 +37,10 @@ class ModalSignUp extends React.Component {
                     );
                     let monUid=firebase.auth().currentUser.uid;
                     let chaine={
-                        Jour:{
-                            j1:0
-                        },
-                        Semaine:{
-                            s1:0
-                        },
-                        Mois:{
-                            m1:0
-                        },
-                        Total:{
-                            t1:0
-                        }
+                        Jour:0,
+                        Semaine:0,
+                        Mois:0,
+                        Total:0,
                     }
                     firebase.database().ref(monUid+"/Cal").set(chaine);
                     firebase.database().ref(monUid+"/Eco").set(chaine);
@@ -57,13 +49,7 @@ class ModalSignUp extends React.Component {
             
                 }
                 catch (error) {
-                    if(error.toString()=="Error: The email address is badly formatted."){
-                        alert('Adresse email invalide')
-                    }
-                    if(error.toString()=='Error: Password should be at least 6 characters'){
-                        alert('le mdp doit contenir au moins 6 caractères')
-                    }
-                    console.log(error.toString())
+                    alert(error.toString())
                 }
             }
             else{

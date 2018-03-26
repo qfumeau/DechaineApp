@@ -6,9 +6,22 @@ import styles from '../Styles/style.js';
 import Map from '../Modaux/map.js';
 import {Constants, Location, Permissions } from 'expo';
 
+const state = {
+  modal:false
+}
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
-const maPosition=null;
-const markerPosition=null;
+const maPosition={
+  latitude: 0,
+  longitude: 0,
+  latitudeDelta: 0.005,
+  longitudeDelta: 0.005,
+};
+const markerPosition={
+  latitude: 0,
+  longitude: 0,
+  latitudeDelta: 0.005,
+  longitudeDelta: 0.005,
+};
 
 class LockScreen extends React.Component {
   constructor(props){
@@ -16,11 +29,15 @@ class LockScreen extends React.Component {
     this.state={
       cadenasOuvertVisible:true,
       cadenasFermeVisible:false,
-      modal:false,
+      //modal:false,
       location: null,
       errorMessage: null,
       showCarte:false,
+      quentin:true
     }
+  }
+  test(){
+    this.setState({modal:false})
   }
   componentWillMount(){
     if (Platform.OS === 'android' && !Constants.isDevice) {
@@ -100,7 +117,6 @@ class LockScreen extends React.Component {
             </View>
               <TouchableHighlight
                 style={{width:'90%',justifyContent:'center',height:'7%',backgroundColor:'rgba(52, 52, 52, 0.8)',marginLeft:'5%',alignItems:'center'}}
-                onPress={()=>this.setState({modal:false})}
                 >
                 <Text style={{fontSize:25,color:'white',opacity:1,fontWeight:'bold'}}>Position de mon vélo</Text>
               </TouchableHighlight>
@@ -124,7 +140,7 @@ class LockScreen extends React.Component {
                 </View>
                 }
               </TouchableHighlight>
-              {this.state.modal&&<Map positionMarker={markerPosition} myPosition={maPosition} ouvert={true}/>}
+              {this.state.modal&&<Map positionMarker={markerPosition} activeModal={()=>this.test()} myPosition={maPosition} ouvert={true}/>}
           </ImageBackground>
         );
     }
