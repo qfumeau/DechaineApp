@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, StatusBar,Alert,Modal,ScrollView,AsyncStorage,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import * as firebase from 'firebase';
 
-require('../ConnexionBD.js');
+require('../../ConnexionBD.js');
 const adresseMail=null;
 
 export default class RecupMdpModal extends React.Component {
@@ -63,7 +63,7 @@ export default class RecupMdpModal extends React.Component {
                     animationType={'slide'}
                     onRequestClose={() => this.closeModal()}
                     >
-                        <ImageBackground source={require('../img/lock.png')} 
+                        <ImageBackground source={require('../../img/lock.png')} 
                             style={{
                                 width: '100%',
                                 height:'110%',
@@ -108,7 +108,7 @@ export default class RecupMdpModal extends React.Component {
                                         />
                                 </View>
                             </View>
-                            <Image source={require('../img/security3.png')} style={{marginTop:45,width:'30%',height:'15%'}}/>
+                            <Image source={require('../../img/security3.png')} style={{marginTop:45,width:'30%',height:'15%'}}/>
                         </ImageBackground>
                 </Modal>
                 <TouchableHighlight

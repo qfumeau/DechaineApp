@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, StatusBar,Modal,ScrollView,TouchableHighlight ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import PopupDialog, {DialogTitle,SlideAnimation} from 'react-native-popup-dialog';
-import AideLock from '../PopupAide/aideLock';
+import AideLock from './aideLock';
 import styles from '../Styles/style.js';
 
 const slideAnimation=new SlideAnimation({

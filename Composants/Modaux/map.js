@@ -1,16 +1,17 @@
 import React,{PropTypes} from 'react';
 import { StyleSheet, Text,StatusBar,Modal, TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import MapView from 'react-native-maps';
-import LockScreen from '../Pages/lock.js';
+import LockScreen from '../../Pages/lock.js';
 
 export default class Map extends React.Component {
   constructor(props){
     super(props);
   }
   state={
+    //state utilisé pour signifier le chargement correct ou non de la carte
     modalVisible:this.props.ouvert
   }
-  
+  //Fonction qui permet de fermer le modal et de renvoyer le state à la vue mère
   closeModal(){
     this.setState({modalVisible:false});
     this.props.activeModal();
@@ -37,7 +38,7 @@ export default class Map extends React.Component {
                 >
                 <MapView.Marker
                           coordinate={this.props.positionMarker}
-                          image={require('../img/markerBike.png')}
+                          image={require('../../img/markerBike.png')}
                           title={"title"}
                           description={"description"}
                       />
@@ -53,10 +54,10 @@ export default class Map extends React.Component {
             <View style={{width:'100%',height:'100%',backgroundColor:'#0078d7',alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:40,fontWeight:'bold',marginBottom:'10%',color:'white'}}>:(  Erreur Carte</Text>
               <Text style={styles.textErreur}>Une erreur est survenue lors</Text>
-              <Text style={styles.textErreur}>de l'affichage de la carte.</Text>
+              <Text style={styles.textErreur}>de l'affichage de la carte.{"\n\n"}</Text>
               <Text style={styles.textErreur}>Cela peut être dû à un problème</Text>
               <Text style={styles.textErreur}>de géolocalisation</Text>
-              <Text style={styles.textErreur}>ou à une erreur interne.</Text>
+              <Text style={styles.textErreur}>ou à une erreur interne.{"\n\n"}</Text>
               <Text style={styles.textErreur}>Pour contrôler votre géolocalisation</Text>
               <Text style={styles.textErreur}>vous pouvez utiliser google map.</Text>
               <Text style={styles.textErreur}>Sinon rechargez l'application.</Text>

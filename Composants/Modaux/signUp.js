@@ -2,7 +2,7 @@ import React,{PropTypes} from 'react';
 import { StyleSheet, Text,StatusBar,Modal, TouchableHighlight,Alert,AsyncStorage ,KeyboardAvoidingView ,View,Button,TextInput, Image,ImageBackground } from 'react-native';
 import * as firebase from 'firebase';
 
-const FireBase = require('../ConnexionBD.js');
+const FireBase = require('../../ConnexionBD.js');
 const adresseMail=null;
 const mdp=null;
 const mdpVerif=null;
@@ -87,7 +87,7 @@ class ModalSignUp extends React.Component {
                 onRequestClose={() => this.closeModalSignUp()}
                 backgroundColor={'blue'}       
                 >
-                <ImageBackground source={require('../img/accueil2.png')} 
+                <ImageBackground source={require('../../img/accueil2.png')} 
                     style={{
                         width: '100%',
                         height:'110%',

@@ -1,13 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text,Image, View,TouchableHighlight,Dimensions,Button,StatusBar, ImageBackground } from 'react-native';
-import Header from './header';
+import Header from '../Composants/header';
 import FlipCard from 'react-native-flip-card';
 import styles from '../Styles/style.js';
-import TextDistance from '../TextCard/textDistance.js';
-import TextCalories from '../TextCard/textCalories.js';
-import TextEco from '../TextCard/textEco.js';
-import TextCo2 from '../TextCard/textCo2.js';
-import TextCarte from './TextCartes.js';
+import TextCarte from '../Composants/textCartes.js';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 

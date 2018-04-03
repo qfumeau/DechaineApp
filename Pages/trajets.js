@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text,Image, ScrollView ,View,ActivityIndicator,TouchableHighlight,Dimensions,Button,StatusBar, ImageBackground } from 'react-native';
-import Header from './header';
+import Header from '../Composants/header';
 import styles from '../Styles/style.js';
-import ModalTrajet from '../Modaux/modalTrajet.js';
+import ModalTrajet from '../Composants/Modaux/modalTrajet.js';
 import * as firebase from 'firebase';
 
 require('../ConnexionBD.js');
@@ -21,6 +21,8 @@ class trajetsScreen extends React.Component {
     }
   }
   componentWillMount=async()=>{
+    listKey=[];
+    listTrajets=[];
     try{
       let id = firebase.auth().currentUser.uid;
       console.log(id);
@@ -39,10 +41,10 @@ class trajetsScreen extends React.Component {
       alert(error.toString())
     }
   }
-  componentWillUnmount(){
+  /*componentWillUnmount(){
     listKey=[];
     listTrajets=[];
-  }
+  }*/
   maFonction(){
     if(this.state.bdcharge){
     console.log("\n\n\n"+listKey.length)

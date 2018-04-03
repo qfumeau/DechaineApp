@@ -5378,6 +5378,10 @@ react-native-vector-icons@^2.0.1:
     lodash "^4.0.0"
     yargs "^4.7.0"
 
+react-native-volume@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-volume/-/react-native-volume-0.0.1.tgz#c215b9dd4b46b5c37167a8a380cdc929ff59b391"
+
 react-native@0.52.0:
   version "0.52.0"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.52.0.tgz#9784663a2aa40b30c87d4c9c06ef26cf8d419d91"

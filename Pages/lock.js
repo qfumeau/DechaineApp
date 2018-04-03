@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Platform,Text,ActivityIndicator,Image,View,ToastAndroid,TouchableHighlight,BackHandler,Button,StatusBar, Dimensions,ImageBackground, Alert } from 'react-native';
 import MapView from 'react-native-maps';
-import Header from './header';
+import Header from '../Composants/header';
 import styles from '../Styles/style.js';
-import Map from '../Modaux/map.js';
+import Map from '../Composants/Modaux/map.js';
 import {Constants, Location, Permissions } from 'expo';
 import * as firebase from 'firebase';
 
@@ -50,33 +50,32 @@ class LockScreen extends React.Component {
     } else {
       this.getLocationAsync();
     }
-    /*BackHandler.addEventListener('hardwareBackPress', function() {
-      firebase.auth().signOut().then(function() {
-        console.log('on se casse')
-      }).catch(function(error) {
-        console.log(error)
-      });
-    });*/
+    BackHandler.addEventListener('hardwareBackPress', function() {
+        console.log('on se casse');
+        
+    });
   }
   componentDidMount(){
     ToastAndroid.show('Bienvenue sur Dé-chaine !',5000)
   }
-    static navigationOptions = {
-      header:null,
-    };
-    getLocationAsync = async () => {
-      let { status } = await Permissions.askAsync(Permissions.LOCATION);
-      if (status !== 'granted') {
-        this.setState({
-          errorMessage: 'Permission to access location was denied',
+  componentWillUpdate(){
+    StatusBar.setHidden(true)
+  }
+  static navigationOptions = {
+    header:null,
+  };
+  getLocationAsync = async () => {
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status !== 'granted') {
+      this.setState({
+         errorMessage: 'Permission to access location was denied',
         });
         alert('Permission denied');
       }
-  
       let location = await Location.getCurrentPositionAsync({});
       this.setState({ location });
       this.setState({showCarte:true})
-    };
+  };
     render() {
       let text = 'Waiting..';
       if (this.state.errorMessage) {

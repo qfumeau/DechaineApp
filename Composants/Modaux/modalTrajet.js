@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text,Image, Modal ,View,TouchableHighlight,Dimensions,Alert,Picker,Button, ImageBackground } from 'react-native';
-import styles from '../Styles/style.js';
+import styles from '../../Styles/style.js';
 import { TextInput } from 'react-native-gesture-handler';
 import * as firebase from 'firebase';
 import DateTimePicker  from 'react-native-modal-datetime-picker';
@@ -8,13 +8,22 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
-require('../ConnexionBD.js')
+//Permet de se connecter à la bd firebase
+require('../../ConnexionBD.js')
+
+//nb de km du trajet
 const lesKm="0";
+//nb de m du trajet
 const lesM="0";
+//nb heure du trajet
 const lesH="0";
+//nb min du trajet
 const lesMin="0";
+//duree du trajet
 const duree="0";
+//distance du trajet
 const distance="0";
+//date du trajet initialisée à celle du jour actuel
 const maDate=new Date();
 const calendarIcon = (<Icon name="calendar" size={40} color='black' />)
 const data = [];
@@ -24,7 +33,9 @@ for(let i=0;i<100;i++){
 
 export default class ModalTrajet extends React.Component {
   state={
+    //Etat du modal
     modalVisible:false,
+    //affiche ou non un text grisé dans les zones de saisie
     placeholderVisible1:"Distance",
     placeholderVisible2:"Durée",
     placeholderVisible3:"Date",
@@ -34,19 +45,24 @@ export default class ModalTrajet extends React.Component {
     h:0,
     min:0
   }
+  //fonction appelée pour créer un trajet
   infos(){
     distance=""+(lesKm*1000+lesM)
     duree = ""+(lesH*60+lesMin);
+    //récupère l'id de l'utilisateur connecté affin de lui ajouter son trajet
     let userId = firebase.auth().currentUser.uid;
-    let date = maDate.getDate()+","+(maDate.getMonth()+1)+","+maDate.getFullYear();
+    //date mise au format jj/mm/aaaa
+    let date = maDate.getDate()+"/"+(maDate.getMonth()+1)+"/"+maDate.getFullYear();
+    //création d'un objet javascript qui sera stocké dans firebase
     let trajet={
       dist : distance,
       time : duree,
       day : date
     };
+    //contrôle qu'un distance et une durée non nuls ont été saisis
     if(distance!="00"&&duree!="00"){
+      //essaie d'ajouter le trajet dans firebase et renvoie une alert avec l'erreur responsable de l'échec sinon
       try{
-        //firebase.database().ref(userId+"/Cal/").update({Jour:5000000000});
         firebase.database().ref(userId+"/Trajets").push(trajet);
         Alert.alert('Trajet',
           'Votre trajet a bien été ajouté !',
@@ -59,13 +75,12 @@ export default class ModalTrajet extends React.Component {
         console.log(error)
       }
     }
+    //alerte signifiant à l'utilisateur que tous les champs n'ont pas été saisis
     else{
       alert("Champs vides")
     }
   }
-  componentWillMount(){
-    
-  }
+  //Crée un picker permettant de choisir le nb de kilomètres parcourus de 0 à 100
   pickerKm(){
     const nbKm=[];
     for(i=0;i<=100;i++){
@@ -73,6 +88,7 @@ export default class ModalTrajet extends React.Component {
     }
     return nbKm;
   }
+  //Crée un picker permettant de choisir le nb de mètres parcourus de 0 à 900 par pas de 100
   pickerM(){
     const nbM=[];
     for(i=0;i<10;i++){
@@ -80,13 +96,15 @@ export default class ModalTrajet extends React.Component {
     }
     return nbM;
   }
+  //Crée un picker permettant de choisir combien d'heures le trajet à duré de 0 à 23
   pickerH(){
     const nbKm=[];
-    for(i=0;i<=24;i++){
+    for(i=0;i<23;i++){
       nbKm.push(<Picker.Item label={""+i+" heures"} value={i} key={i}/>)
     }
     return nbKm;
   }
+  //Crée un picker permettant de choisir combien de minutes le trajet à duré de 0 à 23
   pickerMin(){
     const nbM=[];
     for(i=0;i<60;i++){
@@ -106,7 +124,7 @@ export default class ModalTrajet extends React.Component {
           <Modal visible={this.state.modalVisible}
             onRequestClose={()=>this.setState({modalVisible:false})}
             >
-            <ImageBackground source={require('../img/trip.png')} imageStyle={{resizeMode:'cover'}} style={{width: viewportWidth,
+            <ImageBackground source={require('../../img/trip.png')} imageStyle={{resizeMode:'cover'}} style={{width: viewportWidth,
             height: viewportHeight,}}>
             <View style={{alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:30,marginTop:'15%',marginBottom:'5%'}}>Ajouter un trajet</Text>
@@ -176,7 +194,7 @@ export default class ModalTrajet extends React.Component {
               </View>
               <DateTimePicker
                 isVisible={this.state.dateVisible}
-                datePickerModeAndroid={"spinner"}
+                datePickerModeAndroid={"calendar"}
                 onConfirm={(date)=>{            
                   maDate=date
                   this.setState({dateVisible:false})
@@ -192,7 +210,7 @@ export default class ModalTrajet extends React.Component {
                   }}/>
                 </View>
                 <View>
-                  <Button title='Fermer' onPress={()=>
+                  <Button title='Ajouter' onPress={()=>
                     this.infos()}/>
                 </View>
               </View>
