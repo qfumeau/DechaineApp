@@ -17,6 +17,7 @@ import Header from '../Composants/header';
 import * as firebase from 'firebase';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import VolumeSlider from '../Composants/volume.js';
+import NewMdpModal from '../Composants/Modaux/newMdpModal.js';
 
 require('../ConnexionBD.js');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
@@ -59,6 +60,13 @@ class ParamScreen extends React.Component {
       ]
     );
   }
+  newPassword(){
+    firebase.auth().currentUser.updatePassword('1234567').then(function(){
+      alert('Mot de passe modifié')
+    }).catch(function(error){
+      alert(error)
+    })
+  }
   static navigationOptions = {
     header: null
   };
@@ -76,7 +84,7 @@ class ParamScreen extends React.Component {
         <View style={{ alignItems: 'center', marginTop: '5%' }}>
           <Text style={{ fontSize: 25 }}>Volume des notifications</Text>
           <View style={styles.ligne} />
-          <VolumeSlider style={{ marginBottom: '10%' }} />
+          <VolumeSlider style={{ marginBottom: '5%' }} />
         </View>
         <View style={{ alignItems: 'center' }}>
           <Text style={{ fontSize: 25 }}>Notifications</Text>
@@ -88,17 +96,14 @@ class ParamScreen extends React.Component {
             <Switch
               value={this.state.ok}
               onValueChange={() => this.setState({ ok: !this.state.ok })}
-              style={
-                {
-                  //marginRight:'60%'
-                }
-              }
             />
           </View>
         </View>
-        <View style={{ alignItems: 'center' }}>
+        <View style={{ alignItems: 'center' , marginTop:'10%'}}>
           <Text style={{ fontSize: 25 }}>Mon compte</Text>
           <View style={styles.ligne} />
+          <View style={{flexDirection:'row'}}>
+          <NewMdpModal />
           <TouchableHighlight
             style={{
               width: 100,
@@ -121,6 +126,7 @@ class ParamScreen extends React.Component {
               <Icon name="sign-out" size={40} color="white" />
             </View>
           </TouchableHighlight>
+          </View>
         </View>
       </ImageBackground>
     );
@@ -133,7 +139,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 2,
     width: '100%',
     marginTop: '5%',
-    marginBottom: '10%'
+    marginBottom: '5%'
   }
 });
 module.exports = ParamScreen;

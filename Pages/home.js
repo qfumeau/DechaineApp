@@ -22,13 +22,18 @@ import timer from 'react-native-timer';
 import * as firebase from 'firebase';
 
 const adresseMailText = 'quentin.fumeau@gmail.com';
-const mdp = '123456';
+const mdp = '1234567';
 const FireBase = require('../ConnexionBD.js');
 
 class LoginScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+  //vide des les champs pour que lors d'une déconnexion on ne puisse pas se reconnecter sans les reremplir
+  componentWillMount(){
+    /*adresseMailText="";
+    mdp=""*/
+  }
   constructor(props) {
     super(props);
     this.state = {

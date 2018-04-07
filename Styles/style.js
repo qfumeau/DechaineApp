@@ -128,5 +128,10 @@ module.exports=StyleSheet.create({
       fontSize:20,
       color:'black',
       textDecorationLine:'underline'
+    },
+    textInputStandard:{
+      height:30,
+      width:'50%',
+      marginBottom:'10%',
     }
   })
