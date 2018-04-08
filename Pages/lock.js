@@ -68,8 +68,16 @@ class LockScreen extends React.Component {
     } else {
       this.getLocationAsync();
     }
-    BackHandler.addEventListener('hardwareBackPress', function() {
-      console.log('on se casse');
+    BackHandler.addEventListener('hardwareBackPress', ()=> {
+      firebase
+      .auth()
+      .signOut()
+      .then(function() {
+        console.log('on se casse');
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
     });
   }
   componentDidMount() {

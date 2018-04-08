@@ -87,7 +87,7 @@ export default class ModalTrajet extends React.Component {
           .ref(userId + '/Trajets')
           .push(trajet);
         Alert.alert('Trajet', 'Votre trajet a bien été ajouté !', [
-          { text: 'OK', onPress: () => this.setState({ modalVisible: false }) }
+          { text: 'OK', onPress: () => this.closeModal() }
         ]);
       } catch (error) {
         console.log(error);
@@ -133,11 +133,9 @@ export default class ModalTrajet extends React.Component {
     }
     return nbM;
   }
-  test() {
-    let distance = '' + lesKm + ',' + lesM;
-    let duree = '' + lesH + "'" + lesMin;
-    console.log('' + duree + ' ' + distance);
-    console.log('' + lesKm + ' ' + lesM + ' ' + lesH + ' ' + lesMin);
+  closeModal() {
+    this.setState({ modalVisible: false });
+    this.props.ferme();
   }
   render() {
     return (

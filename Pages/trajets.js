@@ -16,6 +16,7 @@ import Header from '../Composants/header';
 import styles from '../Styles/style.js';
 import ModalTrajet from '../Composants/Modaux/modalTrajet.js';
 import * as firebase from 'firebase';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 require('../ConnexionBD.js');
 
@@ -24,7 +25,8 @@ const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
 );
 const listKey = [];
 const listTrajets = [];
-
+const id="";
+const trajets = [];
 class trajetsScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -35,10 +37,11 @@ class trajetsScreen extends React.Component {
     };
   }
   componentWillMount = async () => {
+    this.setState({bdcharge:false})
     listKey = [];
     listTrajets = [];
     try {
-      let id = firebase.auth().currentUser.uid;
+      id = firebase.auth().currentUser.uid;
       console.log(id);
       let ref = firebase.database().ref(id + '/Trajets');
       ref.on('child_added', data => {
@@ -51,20 +54,21 @@ class trajetsScreen extends React.Component {
     } catch (error) {
       alert(error.toString());
     }
+    for(let i =0;i<listKey.length;i++){
+      console.log(listKey[i])
+    }
   };
-  /*componentWillUnmount(){
-    listKey=[];
-    listTrajets=[];
-  }*/
   maFonction() {
     if (this.state.bdcharge) {
-      console.log('\n\n\n' + listKey.length);
+      console.log('\n\n\n listekey ' + listKey.length);
       //console.log("\n"+listTrajets[listKey[0]].time)
-      const trajets = [];
+      trajets = [];
       for (let i = 0; i < listKey.length; i++) {
         trajets.push(
           <TouchableHighlight style={styles.touchableHighlight} key={i}>
             <View>
+              <View style={{alignItems:'center',flexDirection:'row'}}>
+              <View style={{width:'90%'}}>
               <Text
                 style={{
                   alignSelf: 'center',
@@ -75,6 +79,13 @@ class trajetsScreen extends React.Component {
                 Trajet {i + 1}
                 {'\n'}
               </Text>
+              </View>
+              <TouchableHighlight
+                onPress={()=>{this.deleteTrip(listKey[i])}}
+              >
+              <Icon name="trash-o" size={25} color="red" />
+              </TouchableHighlight>
+              </View>
               <Text style={{ marginLeft: '5%' }}>
                 Distance : {listTrajets[listKey[i]].dist}
               </Text>
@@ -93,6 +104,15 @@ class trajetsScreen extends React.Component {
       console.log('waiting');
     }
   }
+  deleteTrip(val){
+    try{
+    firebase.database().ref(id+"/Trajets/"+val).remove();
+      this.componentWillMount() 
+  }
+  catch(error){
+    console.log(error.toString())
+  }
+  }
   static navigationOptions = {
     header: null
   };
@@ -108,7 +128,7 @@ class trajetsScreen extends React.Component {
         <StatusBar hidden={true} />
         <Header page="Trajets" />
         <ScrollView style={{ marginBottom: '20%' }}>
-          <ModalTrajet />
+          <ModalTrajet ferme={()=>this.componentWillMount()}/>
           {(this.state.bdcharge && this.maFonction()) || (
             <View
               style={{

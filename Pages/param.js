@@ -67,6 +67,28 @@ class ParamScreen extends React.Component {
       alert(error)
     })
   }
+  supprAccount(){
+    Alert.alert(
+      'Déconnexion',
+      'Vous êtes sur le point de supprimer votre compte.\nCette opération est irréversible\nEt entraînera la perte de toutes vos données\nVoulez-vous continuer ?',
+      [
+        { text: 'Annuler' },
+        {
+          text: 'OK',
+          onPress: () => {
+            this.deleteAccount(),this.props.navigation.navigate('Home')
+          }
+        }
+      ]
+    );
+  }
+  deleteAccount(){
+    firebase.auth().currentUser.delete().then(
+      Alert.alert('Compte Supprimé','Votre compte a bien été supprimé')
+).catch((error)=> {
+  alert(error.toString())
+});
+  }
   static navigationOptions = {
     header: null
   };
@@ -101,15 +123,15 @@ class ParamScreen extends React.Component {
         </View>
         <View style={{ alignItems: 'center' , marginTop:'10%'}}>
           <Text style={{ fontSize: 25 }}>Mon compte</Text>
-          <View style={styles.ligne} />
-          <View style={{flexDirection:'row'}}>
+          <View style={styles.ligneCompte} />
           <NewMdpModal />
+          <View style={{flexDirection:'row'}}>
           <TouchableHighlight
             style={{
-              width: 100,
-              height: 80,
+              width: "45%",
+              height: "50%",
               backgroundColor: 'grey',
-              borderRadius: 20,
+              borderRadius: 10,
               alignItems: 'center',
               justifyContent: 'center'
             }}
@@ -117,13 +139,38 @@ class ParamScreen extends React.Component {
               this.goBackHome();
             }}
           >
-            <View style={{ alignItems: 'center' }}>
+            <View style={{ flexDirection:'row' }}>
               <Text
-                style={{ fontWeight: 'bold', fontSize: 15, color: 'white' }}
+                style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}
               >
-                Déconnexion
+                Déconnexion{'  '}
               </Text>
-              <Icon name="sign-out" size={40} color="white" />
+              <Icon name="sign-out" size={25} color="white" />
+            </View>
+          </TouchableHighlight>
+          <TouchableHighlight
+            style={{
+              width: "45%",
+              height: "50%",
+              backgroundColor: 'white',
+              borderRadius: 10,
+             // borderColor:'red',
+              //borderWidth:2,
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginLeft:'5%'
+            }}
+            onPress={() => {
+              this.supprAccount();
+            }}
+          >
+            <View style={{ flexDirection:'row' }}>
+              <Text
+                style={{ /*fontWeight: 'bold',*/ fontSize: 20, color: 'red' }}
+              >
+                Supprimer{'  '}
+              </Text>
+              <Icon name="remove" size={25} color="red" />
             </View>
           </TouchableHighlight>
           </View>
@@ -140,6 +187,12 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: '5%',
     marginBottom: '5%'
+  },
+  ligneCompte:{
+    borderBottomColor: 'grey',
+    borderBottomWidth: 2,
+    width: '100%',
+    marginTop: '5%',
   }
 });
 module.exports = ParamScreen;
