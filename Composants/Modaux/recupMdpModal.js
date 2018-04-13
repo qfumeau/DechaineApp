@@ -98,7 +98,7 @@ export default class RecupMdpModal extends React.Component {
             <Text style={styles.textMdpLost}>
               <Text>Entrez votre adresse mail,{'\n'}</Text>
               <Text>un nouveau mot de passe{'\n'}</Text>
-              <Text> vous sera envoyé.</Text>
+              <Text>vous sera envoyé.</Text>
             </Text>
             <TextInput
               style={{
@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
     color: 'white',
     fontSize: 16,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignItems:'center'
   }
 });

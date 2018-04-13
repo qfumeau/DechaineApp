@@ -23,6 +23,9 @@ require('../ConnexionBD.js');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   'window'
 );
+const newJ=false;
+const newM=false;
+const newS=false;
 const listKey = [];
 const listTrajets = [];
 const id="";
@@ -60,10 +63,13 @@ class trajetsScreen extends React.Component {
   };
   maFonction() {
     if (this.state.bdcharge) {
-      console.log('\n\n\n listekey ' + listKey.length);
-      //console.log("\n"+listTrajets[listKey[0]].time)
       trajets = [];
       for (let i = 0; i < listKey.length; i++) {
+        let dateNT=new Date(listTrajets[listKey[i]].day);
+        let dateT=dateNT.getDate()+"/"+(dateNT.getMonth()+1)+"/"+dateNT.getFullYear();
+        let dureeH = (parseInt(parseInt(listTrajets[listKey[i]].time)/60))
+        let dureeMin = (parseInt(listTrajets[listKey[i]].time)%60)
+        console.log(listTrajets[listKey[i]].time+" "+dureeH);
         trajets.push(
           <TouchableHighlight style={styles.touchableHighlight} key={i}>
             <View>
@@ -81,19 +87,22 @@ class trajetsScreen extends React.Component {
               </Text>
               </View>
               <TouchableHighlight
-                onPress={()=>{this.deleteTrip(listKey[i])}}
+                onPress={()=>{
+                  this.deleteTrip(listKey[i])
+                }}
+                underlayColor='#ff4d4d'
               >
-              <Icon name="trash-o" size={25} color="red" />
+              <Icon name="trash-o" size={25} color="black" />
               </TouchableHighlight>
               </View>
               <Text style={{ marginLeft: '5%' }}>
-                Distance : {listTrajets[listKey[i]].dist}
+                Distance : {listTrajets[listKey[i]].dist} km
               </Text>
               <Text style={{ marginLeft: '5%' }}>
-                Durée : {listTrajets[listKey[i]].time}
+                Durée : {dureeH}h{dureeMin}min
               </Text>
               <Text style={{ marginLeft: '5%' }}>
-                Date : {listTrajets[listKey[i]].day}
+                Date : {dateT}
               </Text>
             </View>
           </TouchableHighlight>
@@ -128,7 +137,7 @@ class trajetsScreen extends React.Component {
         <StatusBar hidden={true} />
         <Header page="Trajets" />
         <ScrollView style={{ marginBottom: '20%' }}>
-          <ModalTrajet ferme={()=>this.componentWillMount()}/>
+          <ModalTrajet ferme={()=>this.componentWillMount()} trajets={listTrajets} cle={listKey} semaine={newS}/>
           {(this.state.bdcharge && this.maFonction()) || (
             <View
               style={{

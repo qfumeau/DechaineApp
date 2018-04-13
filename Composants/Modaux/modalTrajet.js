@@ -39,8 +39,28 @@ const duree = '0';
 const distance = '0';
 //date du trajet initialisée à celle du jour actuel
 const maDate = new Date();
+const userId = ""
 const calendarIcon = <Icon name="calendar" size={40} color="black" />;
 const data = [];
+const Jc = null;
+const Sc = null;
+const Mc = null;
+const Tc = null;
+const Je = null;
+const Se = null;
+const Me = null;
+const Te = null;
+const Jco = null;
+const Sco = null;
+const Mco = null;
+const Tco = null;
+const Jd = null;
+const Sd = null;
+const Md = null;
+const Td = null;
+const moisEx=false;
+const jourEx=false;
+const semaineEx=false;
 for (let i = 0; i < 100; i++) {
   data.push(i);
 }
@@ -59,24 +79,65 @@ export default class ModalTrajet extends React.Component {
     h: 0,
     min: 0
   };
+  componentWillMount = async () => {
+    userId=firebase.auth().currentUser.uid;
+    try {
+      let database = firebase.database();
+        database.ref(userId + '/Cal').on('value', data => {
+        (Jc = data.val().Jour),
+          (Sc = data.val().Semaine),
+          (Mc = data.val().Mois),
+          (Tc = data.val().Total);
+      });
+      database.ref(userId + '/Eco').on('value', data => {
+        (Je = data.val().Jour),
+          (Se = data.val().Semaine),
+          (Me = data.val().Mois),
+          (Te = data.val().Total);
+      });
+      database.ref(userId + '/Co2').on('value', data => {
+        (Jco = data.val().Jour),
+          (Sco = data.val().Semaine),
+          (Mco = data.val().Mois),
+          (Tco = data.val().Total);
+      });
+      database.ref(userId + '/Distance').on('value', data => {
+        (Jd = data.val().Jour),
+          (Sd = data.val().Semaine),
+          (Md = data.val().Mois),
+          (Td = data.val().Total);
+      });
+      this.componentDidMount();
+    } catch (error) {
+      console.log(error.toString());
+    }
+  };
+  existData(){
+    console.log(this.props.trajets)
+    if(this.props.trajets){
+    let toDay = new Date();
+    for(let i=0;i<this.props.trajets.length;i++){
+      if(toDay.getFullYear()==this.props.trajets[this.props.cle[i]].getFullYear()){
+        if(toDay.getMonth()==this.props.trajets[this.props.cle[i]].getMonth()){
+          moisEx=true
+          if(toDay.getDate()==this.props.trajets[this.props.cle[i]].getDate()){
+            jourEx=true;
+          }
+          if(toDay.getDate()-7<this.props.trajets[this.props.cle[i]].getDate()||toDay.getDate()+7>this.props.trajets[this.props.cle[i]].getDate()){
+              semaineEx=true
+          }
+        }
+      }
+    }
+  }
+}
   //fonction appelée pour créer un trajet
   infos() {
-    distance = '' + (lesKm * 1000 + lesM);
-    duree = '' + (lesH * 60 + lesMin);
-    //récupère l'id de l'utilisateur connecté affin de lui ajouter son trajet
-    let userId = firebase.auth().currentUser.uid;
-    //date mise au format jj/mm/aaaa
-    let date =
-      maDate.getDate() +
-      '/' +
-      (maDate.getMonth() + 1) +
-      '/' +
-      maDate.getFullYear();
-    //création d'un objet javascript qui sera stocké dans firebase
+    let laDate=maDate.getTime()
     let trajet = {
       dist: distance,
       time: duree,
-      day: date
+      day: laDate 
     };
     //contrôle qu'un distance et une durée non nuls ont été saisis
     if (distance != '00' && duree != '00') {
@@ -96,6 +157,95 @@ export default class ModalTrajet extends React.Component {
       //alerte signifiant à l'utilisateur que tous les champs n'ont pas été saisis
       alert('Champs vides');
     }
+  }
+  calculs(){
+    this.existData();
+    distance = '' + (lesKm+ lesM*0.001);
+    let calcDuree=parseInt(lesH)*60+parseInt(lesMin);
+    duree = calcDuree;
+    let lesCal = ((lesH*700+lesMin*11.5)/1000);
+    let lesEco=((lesKm*0.07*1.43));
+    let leCo2=((124*lesKm+0.124*lesM)/1000)
+    let ajd=new Date()
+    let jour = false;
+    let semaine=false;
+    let mois = false;
+    let annee = false;
+    if(maDate.getFullYear()==ajd.getFullYear()){
+      annee=true
+      if(maDate.getMonth()==ajd.getMonth()){
+        mois=true
+        if(maDate.getDay()==ajd.getDay()){
+          jour=true
+          semaine=true
+        }
+        else{
+          if(maDate.getDate()>=ajd.getDate()-7&&maDate.getDate()<=ajd.getDate()+7)
+          semaine=true
+        }
+      }
+      
+    }
+      if(mois){
+        if(!moisEx){
+          Mc=0;
+          Mco=0;
+          Md=0;
+          Mj=0;
+          Jc=0;
+          Jco=0;
+          Je=0;
+          Jd=0;
+          Sc=0;
+          Sco=0;
+          Sd=0;
+          Sj=0;
+        }
+        if(!semaineEx){
+          Sc=0;
+          Sco=0;
+          Sd=0;
+          Sj=0;
+        }
+        let c=(lesCal+parseFloat(Mc)).toFixed(3)
+        let e=(lesEco+parseFloat(Me)).toFixed(2)
+        let co=(leCo2+parseFloat(Mco)).toFixed(3)
+        let d=((parseFloat(distance)+parseInt(Md))).toFixed(3)
+        firebase.database().ref(userId+"/Cal/Mois").set(c)
+        firebase.database().ref(userId+"/Eco/Mois").set(e)
+        firebase.database().ref(userId+"/Co2/Mois").set(co)
+        firebase.database().ref(userId+"/Distance/Mois").set(d)
+      }
+        if(jour){
+          let c=(lesCal+parseFloat(Jc)).toFixed(3)
+          let e=(lesEco+parseFloat(Je)).toFixed(2)
+          let co=(leCo2+parseFloat(Jco)).toFixed(3)
+          let d=((parseFloat(distance)+parseFloat(Jd))).toFixed(3)
+          firebase.database().ref(userId+"/Cal/Jour").set(c)
+          firebase.database().ref(userId+"/Eco/Jour").set(e)
+          firebase.database().ref(userId+"/Co2/Jour").set(co)
+          firebase.database().ref(userId+"/Distance/Jour").set(d)
+        }
+        if(semaine){
+          let c=(lesCal+parseFloat(Sc)).toFixed(3)
+          let e=(lesEco+parseFloat(Se)).toFixed(2)
+          let co=(leCo2+parseFloat(Sco)).toFixed(3)
+          let d=(parseFloat(distance)+parseFloat(Sd)).toFixed(3)
+          firebase.database().ref(userId+"/Cal/Semaine").set(c)
+          firebase.database().ref(userId+"/Eco/Semaine").set(e)
+          firebase.database().ref(userId+"/Co2/Semaine").set(co)
+          firebase.database().ref(userId+"/Distance/Semaine").set(d)
+        }
+        let c=(lesCal+parseFloat(Tc)).toFixed(3)
+        let e=(lesEco+parseFloat(Te)).toFixed(2)
+        let co=(leCo2+parseFloat(Tco)).toFixed(3)
+        let d=(parseFloat(distance)+parseFloat(Td)).toFixed(3)
+        firebase.database().ref(userId+"/Cal/Total").set(c)
+        firebase.database().ref(userId+"/Eco/Total").set(e)
+        firebase.database().ref(userId+"/Co2/Total").set(co)
+        firebase.database().ref(userId+"/Distance/Total").set(d)
+   this.infos();
+    //console.log(parseInt(duree))
   }
   //Crée un picker permettant de choisir le nb de kilomètres parcourus de 0 à 100
   pickerKm() {
@@ -253,7 +403,7 @@ export default class ModalTrajet extends React.Component {
                   />
                 </View>
                 <View>
-                  <Button title="Ajouter" onPress={() => this.infos()} />
+                  <Button title="Ajouter" onPress={() => this.calculs()} />
                 </View>
               </View>
             </View>

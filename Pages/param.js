@@ -18,12 +18,12 @@ import * as firebase from 'firebase';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import VolumeSlider from '../Composants/volume.js';
 import NewMdpModal from '../Composants/Modaux/newMdpModal.js';
+import ModalInfos from '../Composants/Modaux/infos.js';
 
 require('../ConnexionBD.js');
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   'window'
 );
-
 class ParamScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -83,6 +83,7 @@ class ParamScreen extends React.Component {
     );
   }
   deleteAccount(){
+    firebase.database().ref(firebase.auth().currentUser.uid).remove();
     firebase.auth().currentUser.delete().then(
       Alert.alert('Compte Supprimé','Votre compte a bien été supprimé')
 ).catch((error)=> {
@@ -104,13 +105,11 @@ class ParamScreen extends React.Component {
         <StatusBar hidden={true} />
         <Header page="Paramètres" />
         <View style={{ alignItems: 'center', marginTop: '5%' }}>
-          <Text style={{ fontSize: 25 }}>Volume des notifications</Text>
-          <View style={styles.ligne} />
+          <Text style={{ fontSize: 25,marginBottom:"10%" }}>Volume des notifications</Text>
           <VolumeSlider style={{ marginBottom: '5%' }} />
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ fontSize: 25 }}>Notifications</Text>
-          <View style={styles.ligne} />
+          <Text style={{ fontSize: 25,marginTop:'5%',marginBottom:"10%" }}>Notifications</Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ fontSize: 20, marginRight: '5%' }}>
               Activer/Désactiver
@@ -122,10 +121,12 @@ class ParamScreen extends React.Component {
           </View>
         </View>
         <View style={{ alignItems: 'center' , marginTop:'10%'}}>
-          <Text style={{ fontSize: 25 }}>Mon compte</Text>
-          <View style={styles.ligneCompte} />
+          <Text style={{ fontSize: 25,marginTop:'5%',marginBottom:"7%" }}>Mon compte</Text>
+          <View style={{ flexDirection:'row' }}>
           <NewMdpModal />
-          <View style={{flexDirection:'row'}}>
+          <ModalInfos/>
+          </View>
+          <View style={{flexDirection:'row',marginTop:'5%'}}>
           <TouchableHighlight
             style={{
               width: "45%",

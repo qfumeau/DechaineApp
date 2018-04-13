@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import styles from '../../Styles/style.js';
 import * as firebase from 'firebase';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   'window'
@@ -134,7 +135,7 @@ export default class NewMdpModal extends React.Component {
                     }}
                   >
                     <Button
-                      onPress={() => this.closeModal()}
+                      onPress={() => this.setState({modalVisible:false})}
                       title="Annuler"
                       style={{ flex: 1, marginRight: 5, paddingRight: 20 }}
                       color={'grey'}
@@ -152,16 +153,26 @@ export default class NewMdpModal extends React.Component {
                   </View>
                 </View>
               </View>
-              <Button title='Supprimer Compte' color='red' onPress={()=>console.log('suppr')}/>
             </View>
           </ImageBackground>
         </Modal>
         <TouchableHighlight
-          style={styles.creerTrajetButton}
+          style={{
+            backgroundColor:'#1a75ff',
+            height:40,
+            width:165,
+            borderRadius: 10,
+            alignItems: 'center',
+            justifyContent: 'center',
+            marginRight:"4%"
+          }}
           onPress={() => this.setState({ modalVisible: true })}
-          underlayColor={null}
         >
-          <Text style={styles.creerTrajetText}>Changer mot de passe</Text>
+        <View style={{ flexDirection:'row' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Changer mdp{"   "}</Text>
+              <Icon name="edit" size={25} color="white" />
+            </View>
+          
         </TouchableHighlight>
       </View>
     );
