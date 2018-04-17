@@ -9,7 +9,6 @@ import {
   ToastAndroid,
   TouchableHighlight,
   BackHandler,
-  Button,
   StatusBar,
   Dimensions,
   ImageBackground,
@@ -30,12 +29,14 @@ const state = {
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get(
   'window'
 );
+//position du téléphone
 const maPosition = {
   latitude: 0,
   longitude: 0,
   latitudeDelta: 0.005,
   longitudeDelta: 0.005
 };
+//initialisation de la position du marker
 const markerPosition = {
   latitude: 0,
   longitude: 0,
@@ -49,16 +50,17 @@ class LockScreen extends React.Component {
     this.state = {
       cadenasOuvertVisible: true,
       cadenasFermeVisible: false,
-      //modal:false,
       location: null,
       errorMessage: null,
       showCarte: false,
       quentin: true
     };
   }
-  test() {
+  //permet de rouvrir le modal map une fois qu'il a été fermé
+  activeMap() {
     this.setState({ modal: false });
   }
+  //charge la position du téléphone au chargement du composant
   componentWillMount() {
     if (Platform.OS === 'android' && !Constants.isDevice) {
       this.setState({
@@ -68,18 +70,19 @@ class LockScreen extends React.Component {
     } else {
       this.getLocationAsync();
     }
-    BackHandler.addEventListener('hardwareBackPress', ()=> {
+    BackHandler.addEventListener('hardwareBackPress', () => {
       firebase
-      .auth()
-      .signOut()
-      .then(function() {
-        console.log('on se casse');
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+        .auth()
+        .signOut()
+        .then(function() {
+          console.log('on se casse');
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     });
   }
+  //Affiche un toast android une fois la connexion faite
   componentDidMount() {
     ToastAndroid.show('Bienvenue sur Dé-chaine !', 5000);
   }
@@ -89,6 +92,7 @@ class LockScreen extends React.Component {
   static navigationOptions = {
     header: null
   };
+  //Récupère la postion du téléphone
   getLocationAsync = async () => {
     let { status } = await Permissions.askAsync(Permissions.LOCATION);
     if (status !== 'granted') {
@@ -210,8 +214,8 @@ class LockScreen extends React.Component {
             >
               <MapView.Marker
                 coordinate={markerPosition}
-                title={'title'}
-                description={'description'}
+                title={'Mon vélo'}
+                description={'Potision de votre vélo'}
               />
             </MapView>
           )) || (
@@ -225,7 +229,7 @@ class LockScreen extends React.Component {
           <Map
             positionMarker={markerPosition}
             mapCharge={this.state.showCarte}
-            activeModal={() => this.test()}
+            activeModal={() => this.activeMap()}
             myPosition={maPosition}
             ouvert={true}
           />

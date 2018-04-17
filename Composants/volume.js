@@ -8,6 +8,13 @@ export default class VolumeSlider extends React.Component {
   state = {
     sonCoupe: false
   };
+  changeVolume() {
+    //TODO
+    /*
+      Le contenu de cette fonction reste à réalisé mais je n'ai pas trouvé de code fonctionnel
+      sur internet permettant d'interagir avec le mobile sur le volume
+    */
+  }
   render() {
     return (
       <View style={this.props.style}>
@@ -22,6 +29,7 @@ export default class VolumeSlider extends React.Component {
             value={3}
             maximumValue={6}
             onValueChange={value => {
+              this.changeVolume();
               valeurSlider = value;
               if (value == 0) {
                 this.setState({ sonCoupe: true });
@@ -29,7 +37,6 @@ export default class VolumeSlider extends React.Component {
                 this.setState({ sonCoupe: false });
               }
             }}
-            //value={value}
           />
           {!this.state.sonCoupe && (
             <Icon name="volume-up" size={40} color="black" />

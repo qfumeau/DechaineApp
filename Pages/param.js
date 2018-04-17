@@ -2,7 +2,6 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  Image,
   Alert,
   View,
   Switch,
@@ -60,14 +59,8 @@ class ParamScreen extends React.Component {
       ]
     );
   }
-  newPassword(){
-    firebase.auth().currentUser.updatePassword('1234567').then(function(){
-      alert('Mot de passe modifié')
-    }).catch(function(error){
-      alert(error)
-    })
-  }
-  supprAccount(){
+  //permet de supprimer un compte
+  supprAccount() {
     Alert.alert(
       'Déconnexion',
       'Vous êtes sur le point de supprimer votre compte.\nCette opération est irréversible\nEt entraînera la perte de toutes vos données\nVoulez-vous continuer ?',
@@ -76,19 +69,25 @@ class ParamScreen extends React.Component {
         {
           text: 'OK',
           onPress: () => {
-            this.deleteAccount(),this.props.navigation.navigate('Home')
+            this.deleteAccount(), this.props.navigation.navigate('Home');
           }
         }
       ]
     );
   }
-  deleteAccount(){
-    firebase.database().ref(firebase.auth().currentUser.uid).remove();
-    firebase.auth().currentUser.delete().then(
-      Alert.alert('Compte Supprimé','Votre compte a bien été supprimé')
-).catch((error)=> {
-  alert(error.toString())
-});
+  //supprime le compte
+  deleteAccount() {
+    firebase
+      .database()
+      .ref(firebase.auth().currentUser.uid)
+      .remove();
+    firebase
+      .auth()
+      .currentUser.delete()
+      .then(Alert.alert('Compte Supprimé', 'Votre compte a bien été supprimé'))
+      .catch(error => {
+        alert(error.toString());
+      });
   }
   static navigationOptions = {
     header: null
@@ -105,11 +104,15 @@ class ParamScreen extends React.Component {
         <StatusBar hidden={true} />
         <Header page="Paramètres" />
         <View style={{ alignItems: 'center', marginTop: '5%' }}>
-          <Text style={{ fontSize: 25,marginBottom:"10%" }}>Volume des notifications</Text>
+          <Text style={{ fontSize: 25, marginBottom: '10%' }}>
+            Volume des notifications
+          </Text>
           <VolumeSlider style={{ marginBottom: '5%' }} />
         </View>
         <View style={{ alignItems: 'center' }}>
-          <Text style={{ fontSize: 25,marginTop:'5%',marginBottom:"10%" }}>Notifications</Text>
+          <Text style={{ fontSize: 25, marginTop: '5%', marginBottom: '10%' }}>
+            Notifications
+          </Text>
           <View style={{ flexDirection: 'row' }}>
             <Text style={{ fontSize: 20, marginRight: '5%' }}>
               Activer/Désactiver
@@ -120,60 +123,60 @@ class ParamScreen extends React.Component {
             />
           </View>
         </View>
-        <View style={{ alignItems: 'center' , marginTop:'10%'}}>
-          <Text style={{ fontSize: 25,marginTop:'5%',marginBottom:"7%" }}>Mon compte</Text>
-          <View style={{ flexDirection:'row' }}>
-          <NewMdpModal />
-          <ModalInfos/>
+        <View style={{ alignItems: 'center', marginTop: '10%' }}>
+          <Text style={{ fontSize: 25, marginTop: '5%', marginBottom: '7%' }}>
+            Mon compte
+          </Text>
+          <View style={{ flexDirection: 'row' }}>
+            <NewMdpModal />
+            <ModalInfos />
           </View>
-          <View style={{flexDirection:'row',marginTop:'5%'}}>
-          <TouchableHighlight
-            style={{
-              width: "45%",
-              height: "50%",
-              backgroundColor: 'grey',
-              borderRadius: 10,
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}
-            onPress={() => {
-              this.goBackHome();
-            }}
-          >
-            <View style={{ flexDirection:'row' }}>
-              <Text
-                style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}
-              >
-                Déconnexion{'  '}
-              </Text>
-              <Icon name="sign-out" size={25} color="white" />
-            </View>
-          </TouchableHighlight>
-          <TouchableHighlight
-            style={{
-              width: "45%",
-              height: "50%",
-              backgroundColor: 'white',
-              borderRadius: 10,
-             // borderColor:'red',
-              //borderWidth:2,
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginLeft:'5%'
-            }}
-            onPress={() => {
-              this.supprAccount();
-            }}
-          >
-            <View style={{ flexDirection:'row' }}>
-              <Text
-                style={{ /*fontWeight: 'bold',*/ fontSize: 20, color: 'red' }}
-              >
-                Supprimer{'  '}
-              </Text>
-              <Icon name="remove" size={25} color="red" />
-            </View>
-          </TouchableHighlight>
+          <View style={{ flexDirection: 'row', marginTop: '5%' }}>
+            <TouchableHighlight
+              style={{
+                width: '45%',
+                height: '50%',
+                backgroundColor: 'grey',
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center'
+              }}
+              onPress={() => {
+                this.goBackHome();
+              }}
+            >
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}
+                >
+                  Déconnexion{'  '}
+                </Text>
+                <Icon name="sign-out" size={25} color="white" />
+              </View>
+            </TouchableHighlight>
+            <TouchableHighlight
+              style={{
+                width: '45%',
+                height: '50%',
+                backgroundColor: 'white',
+                borderRadius: 10,
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginLeft: '5%'
+              }}
+              onPress={() => {
+                this.supprAccount();
+              }}
+            >
+              <View style={{ flexDirection: 'row' }}>
+                <Text
+                  style={{ /*fontWeight: 'bold',*/ fontSize: 20, color: 'red' }}
+                >
+                  Supprimer{'  '}
+                </Text>
+                <Icon name="remove" size={25} color="red" />
+              </View>
+            </TouchableHighlight>
           </View>
         </View>
       </ImageBackground>
@@ -189,11 +192,11 @@ const styles = StyleSheet.create({
     marginTop: '5%',
     marginBottom: '5%'
   },
-  ligneCompte:{
+  ligneCompte: {
     borderBottomColor: 'grey',
     borderBottomWidth: 2,
     width: '100%',
-    marginTop: '5%',
+    marginTop: '5%'
   }
 });
 module.exports = ParamScreen;

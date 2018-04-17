@@ -19,10 +19,12 @@ export default class TextCarte extends React.Component {
   state = {
     chargeOk: false
   };
+  //récupère les données en bd
   componentWillMount = async () => {
     try {
       let leUid = firebase.auth().currentUser.uid;
       let database = firebase.database();
+      //utilisation des props pour ne faire qu'un code pour les différents types de cartes
       database.ref(leUid + '/' + this.props.code).on('value', data => {
         (J = data.val().Jour),
           (S = data.val().Semaine),
@@ -34,6 +36,7 @@ export default class TextCarte extends React.Component {
       console.log(error.toString());
     }
   };
+  //ajoute des unités à chaque donnée
   addUnity() {
     if (this.props.code == 'Distance') {
       return ' km';

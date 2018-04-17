@@ -33,22 +33,26 @@ export default class NewMdpModal extends React.Component {
     modalVisible: false,
     mdpOk: false
   };
+  //permet de vérifier si le mot de passe actuel de l'utilisateur est correct
   Verif() {
     firebase
       .auth()
       .currentUser.reauthenticateWithCredential(
         firebase.auth.EmailAuthProvider.credential(
           firebase.auth().currentUser.email,
-          '1234567'
+          actuMdp
         )
       )
       .then(this.changePass())
       .catch(function(error) {
-        console.log(error.toString());
+        alert(error.toString());
       });
   }
+  //permet de changer de mot de passe
   changePass() {
+    //vérifie que les 2 mots de passe ne sont pas vides
     if (nvMdp != '' && confMdp != '') {
+      //vérifie que les 2 mots de passe sont égaux
       if (nvMdp == confMdp) {
         firebase
           .auth()
@@ -59,7 +63,6 @@ export default class NewMdpModal extends React.Component {
           .catch(function(error) {
             alert(error);
           });
-        console.log('changement de mot de passe');
         this.setState({ modalVisible: false });
       } else {
         Alert.alert(
@@ -100,6 +103,7 @@ export default class NewMdpModal extends React.Component {
                 placeholderTextColor="grey"
                 placeholder="Mot de passe actuel"
                 onChangeText={text => (actuMdp = text)}
+                secureTextEntry={true}
               />
               <Text>Nouveau mot de passe : </Text>
               <TextInput
@@ -107,6 +111,7 @@ export default class NewMdpModal extends React.Component {
                 placeholderTextColor="grey"
                 placeholder="Nouveau mot de passe"
                 onChangeText={text => (nvMdp = text)}
+                secureTextEntry={true}
               />
               <Text>Confirmation du mot de passe : </Text>
               <TextInput
@@ -114,6 +119,7 @@ export default class NewMdpModal extends React.Component {
                 placeholderTextColor="grey"
                 placeholder="Confirmation du mot de passe"
                 onChangeText={text => (confMdp = text)}
+                secureTextEntry={true}
               />
               <View style={{ flexDirection: 'row' }}>
                 <View
@@ -135,7 +141,7 @@ export default class NewMdpModal extends React.Component {
                     }}
                   >
                     <Button
-                      onPress={() => this.setState({modalVisible:false})}
+                      onPress={() => this.setState({ modalVisible: false })}
                       title="Annuler"
                       style={{ flex: 1, marginRight: 5, paddingRight: 20 }}
                       color={'grey'}
@@ -149,7 +155,7 @@ export default class NewMdpModal extends React.Component {
                       alignItems: 'center'
                     }}
                   >
-                    <Button onPress={() => this.recupMdp()} title="Valider" />
+                    <Button onPress={() => this.Verif()} title="Valider" />
                   </View>
                 </View>
               </View>
@@ -158,21 +164,22 @@ export default class NewMdpModal extends React.Component {
         </Modal>
         <TouchableHighlight
           style={{
-            backgroundColor:'#1a75ff',
-            height:40,
-            width:165,
+            backgroundColor: '#1a75ff',
+            height: 40,
+            width: 165,
             borderRadius: 10,
             alignItems: 'center',
             justifyContent: 'center',
-            marginRight:"4%"
+            marginRight: '4%'
           }}
           onPress={() => this.setState({ modalVisible: true })}
         >
-        <View style={{ flexDirection:'row' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>Changer mdp{"   "}</Text>
-              <Icon name="edit" size={25} color="white" />
-            </View>
-          
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ fontWeight: 'bold', fontSize: 20, color: 'white' }}>
+              Changer mdp{'   '}
+            </Text>
+            <Icon name="edit" size={25} color="white" />
+          </View>
         </TouchableHighlight>
       </View>
     );

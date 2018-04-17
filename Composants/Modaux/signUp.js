@@ -6,7 +6,6 @@ import {
   Modal,
   TouchableHighlight,
   Alert,
-  AsyncStorage,
   KeyboardAvoidingView,
   View,
   Button,
@@ -31,14 +30,19 @@ class ModalSignUp extends React.Component {
     mdpVide: false,
     mdpVerifVide: false
   };
+  //ouvre le modal
   openModalSignUp() {
     this.setState({ modalVisible2: true });
   }
+  //ferme le modal
   closeModalSignUp() {
     this.setState({ modalVisible2: false });
   }
+  //crée un compte
   creerCompte = async () => {
+    //vérifie si les 3 champs ont été complêtés
     if (adresseMail && mdp && mdpVerif) {
+      //vérifie si les deux mots de passe sont égaux
       if (mdp == mdpVerif) {
         try {
           await firebase
@@ -49,6 +53,7 @@ class ModalSignUp extends React.Component {
             'Félicitation !\n\nVotre compte a été créé avec succès !',
             [{ text: 'OK', onPress: () => this.closeModalSignUp() }]
           );
+          //créer la bd associées à l'utilisateur
           let monUid = firebase.auth().currentUser.uid;
           let chaine = {
             Jour: 0,

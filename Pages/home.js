@@ -4,16 +4,13 @@ import {
   Alert,
   Text,
   StatusBar,
-  ActivityIndicator,
-  Modal,
-  AsyncStorage,
   ScrollView,
+  Image,
   TouchableHighlight,
   KeyboardAvoidingView,
   View,
   Button,
   TextInput,
-  Image,
   ImageBackground
 } from 'react-native';
 import ModalSignUp from '../Composants/Modaux/signUp.js';
@@ -22,7 +19,8 @@ import timer from 'react-native-timer';
 import * as firebase from 'firebase';
 
 const adresseMailText = 'quentin.fumeau@gmail.com';
-const mdp = '1234567';
+const mdp = '123456';
+//charge la base de données
 const FireBase = require('../ConnexionBD.js');
 
 class LoginScreen extends React.Component {
@@ -30,7 +28,7 @@ class LoginScreen extends React.Component {
     header: null
   };
   //vide des les champs pour que lors d'une déconnexion on ne puisse pas se reconnecter sans les reremplir
-  componentWillMount(){
+  componentWillMount() {
     /*adresseMailText="";
     mdp=""*/
   }
@@ -63,6 +61,7 @@ class LoginScreen extends React.Component {
       }
     } else {
       try {
+        //Appel à la méthode d'autentification par adresse mail de firebase
         await firebase.auth().signInWithEmailAndPassword(adresseMailText, mdp);
         this.props.navigation.navigate('A');
       } catch (error) {
@@ -70,9 +69,6 @@ class LoginScreen extends React.Component {
       }
     }
   };
-  connexion2() {
-    this.props.navigation.navigate('A');
-  }
   render() {
     return (
       <ImageBackground
@@ -106,7 +102,6 @@ class LoginScreen extends React.Component {
             autoCorrect={false}
             underlineColorAndroid={(this.state.mailVide && 'red') || null}
             onChangeText={text => {
-              //this.setState({mailAddress:text});
               adresseMailText = text;
             }}
           />
@@ -120,7 +115,6 @@ class LoginScreen extends React.Component {
             placeholderTextColor={(this.state.mdpVide && 'red') || null}
             underlineColorAndroid={(this.state.mdpVide && 'red') || null}
             onChangeText={text => {
-              //this.setState({leMdp:text});
               mdp = text;
             }}
           />

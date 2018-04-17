@@ -5,10 +5,7 @@ import {
   StatusBar,
   Alert,
   Modal,
-  ScrollView,
-  AsyncStorage,
   TouchableHighlight,
-  KeyboardAvoidingView,
   View,
   Button,
   TextInput,
@@ -28,27 +25,15 @@ export default class RecupMdpModal extends React.Component {
     modalVisible: false,
     adresseMailState: ''
   };
-
+  //ouvre le modal
   openModal() {
     this.setState({ modalVisible: true });
   }
-
+  //ferme le modal
   closeModal() {
     this.setState({ modalVisible: false });
   }
-  recupMdp2 = async () => {
-    try {
-      let util = await AsyncStorage.getItem('user');
-      const user = JSON.parse(util);
-      Alert.alert(
-        'Compte ajouté !',
-        'Email : ' + user.email + '\nMdp : ' + user.mdpUser,
-        [{ text: 'OK', onPress: () => this.closeModal() }]
-      );
-    } catch (error) {
-      alert(error);
-    }
-  };
+  //fonction de récupération du mot de passe
   recupMdp() {
     if (adresseMail) {
       firebase
@@ -192,6 +177,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 16,
     fontWeight: 'bold',
-    alignItems:'center'
+    alignItems: 'center'
   }
 });

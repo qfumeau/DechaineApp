@@ -2,22 +2,15 @@ import React from 'react';
 import {
   StyleSheet,
   Text,
-  StatusBar,
-  Modal,
-  ScrollView,
   TouchableHighlight,
-  KeyboardAvoidingView,
   View,
   Button,
-  TextInput,
-  Image,
-  ImageBackground
+  Image
 } from 'react-native';
 import PopupDialog, {
   DialogTitle,
   SlideAnimation
 } from 'react-native-popup-dialog';
-import AideLock from './aideLock';
 import styles from '../Styles/style.js';
 
 const slideAnimation = new SlideAnimation({
@@ -57,15 +50,15 @@ export default class Header extends React.Component {
             dialogAnimation={slideAnimation}
           >
             <View style={styles.popupView}>
-              <Text>Cet écran vous permet de verrouiller votre vélo.</Text>
-              <Text>C'est-à-dire, signifier qu'il est attaché</Text>
-              <Text>et qu'il n'est plus censé bouger</Text>
-              <Text>jusqu'au prochain déverrouillage.</Text>
-              <Text style={{ marginTop: 10 }}>
-                Pour verrouiller ou déverrouiller :
+              <Text style={{ textAlign: 'center', marginBottom: 10 }}>
+                Cet écran vous permet de verrouiller votre vélo.
+                {'\n'}C'est-à-dire, signifier qu'il est attaché{'\n'}et qu'il
+                n'est plus censé bouger
+                {'\n'}jusqu'au prochain déverrouillage.{'\n'}
               </Text>
-              <Text style={{ marginBottom: 20 }}>
-                il suffit de cliquer sur le cadenas.
+              <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                Pour verrouiller ou déverrouiller :{'\n'}il suffit de cliquer
+                sur le cadenas.
               </Text>
               <Button
                 title="J'ai compris"
@@ -81,12 +74,11 @@ export default class Header extends React.Component {
             dialogAnimation={slideAnimation}
           >
             <View style={styles.popupView}>
-              <Text>Cet écran vous permet de consulter</Text>
-              <Text style={{ marginBottom: 5 }}>vos 10 derniers trajets.</Text>
-              <Text>En cliquant sur l'un d'eux,</Text>
-              <Text>vous pourrez consulter des informations</Text>
-              <Text style={{ marginBottom: 20 }}>
-                telles que : la durée, la date et la distance parcourue.
+              <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                Cet écran vous permet de consulter{'\n'}vos 10 derniers trajets.
+                {'\n'}En cliquant sur l'un d'eux,{'\n'}vous pourrez consulter
+                des informations
+                {'\n'}telles que : la durée, la date et la distance parcourue.
               </Text>
               <Button
                 title="J'ai compris"
@@ -102,9 +94,15 @@ export default class Header extends React.Component {
             dialogAnimation={slideAnimation}
           >
             <View style={styles.popupView}>
-              <Text>Cet écran vous permet de consulter vos statistiques.</Text>
-              <Text>Cliquez sur un item pour voir les statistiques</Text>
-              <Text style={{ marginBottom: 20 }}>qui lui sont associées.</Text>
+              <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                Cet écran vous permet de consulter vos statistiques. Cliquez sur
+                un item pour voir les statistiques{'\n'} qui lui sont associées.{
+                  '\n\n'
+                }
+                Les informations disponibles sur le calcul de celles-ci {'\n'}sont
+                disponibles dans l'onglet "Paramètres". {'\n'}en cliquant sur
+                "Infos"
+              </Text>
               <Button
                 title="J'ai compris"
                 onPress={() => this.popupDialog.dismiss()}
@@ -119,15 +117,17 @@ export default class Header extends React.Component {
             dialogAnimation={slideAnimation}
           >
             <View style={styles.popupView}>
-              <Text>
-                Cet écran vous permet de gérer les paramètres de l'appli.
+              <Text style={{ textAlign: 'center', marginBottom: 20 }}>
+                Cet écran vous permet de gérer les paramètres de l'application.{
+                  '\n'
+                }
+                Vous pouvez baissez le son ou désactiver {'\n'}les notifiations
+                associées au mouvement du vélo.{'\n'}
+                Vous pouvez également changer votre mot de passe,{'\n'}
+                consulter les informations de calcul des statistiques{'\n'}
+                ou bien nous quitter en supprimant définitivement votre comtpe.
               </Text>
-              <Text style={{ marginTop: 10 }}>
-                Vous pouvez désactiver les notifiations
-              </Text>
-              <Text>associées au mouvement du vélo.</Text>
-              <Text>Et on verra plus tard pour la suite !</Text>
-              <Text style={{ marginBottom: 20, fontSize: 30 }}>♥</Text>
+
               <Button
                 title="J'ai compris"
                 onPress={() => this.popupDialog.dismiss()}

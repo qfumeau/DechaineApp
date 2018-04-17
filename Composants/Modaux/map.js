@@ -5,13 +5,7 @@ import {
   StatusBar,
   Modal,
   TouchableHighlight,
-  Alert,
-  AsyncStorage,
-  KeyboardAvoidingView,
   View,
-  Button,
-  TextInput,
-  Image,
   ImageBackground
 } from 'react-native';
 import MapView from 'react-native-maps';
@@ -30,9 +24,7 @@ export default class Map extends React.Component {
     this.setState({ modalVisible: false });
     this.props.activeModal();
   }
-  test() {
-    console.log('coucou');
-  }
+  //Méthode appelée au chargement du composant
   componentWillMount() {
     StatusBar.setHidden(false);
   }
@@ -60,8 +52,8 @@ export default class Map extends React.Component {
               <MapView.Marker
                 coordinate={this.props.positionMarker}
                 image={require('../../img/markerBike.png')}
-                title={'title'}
-                description={'description'}
+                title={'Mon vélo'}
+                description={'Potision de votre vélo'}
               />
             </MapView>
             <TouchableHighlight
