@@ -178,12 +178,10 @@ export default class ModalTrajet extends React.Component {
         if(maDate.getDay()==ajd.getDay()){
           jour=true
           semaine=true
-        }
-        else{
           if(maDate.getDate()>=ajd.getDate()-7&&maDate.getDate()<=ajd.getDate()+7)
           semaine=true
-        }
       }
+    }
       
     }
       if(mois){
@@ -217,6 +215,12 @@ export default class ModalTrajet extends React.Component {
         firebase.database().ref(userId+"/Distance/Mois").set(d)
       }
         if(jour){
+          if(!jourEx){
+            Jc=0;
+          Jco=0;
+          Je=0;
+          Jd=0;
+          }
           let c=(lesCal+parseFloat(Jc)).toFixed(3)
           let e=(lesEco+parseFloat(Je)).toFixed(2)
           let co=(leCo2+parseFloat(Jco)).toFixed(3)
@@ -227,6 +231,12 @@ export default class ModalTrajet extends React.Component {
           firebase.database().ref(userId+"/Distance/Jour").set(d)
         }
         if(semaine){
+          if(!semaineEx){
+            Sc=0;
+          Sco=0;
+          Sd=0;
+          Sj=0;
+          }
           let c=(lesCal+parseFloat(Sc)).toFixed(3)
           let e=(lesEco+parseFloat(Se)).toFixed(2)
           let co=(leCo2+parseFloat(Sco)).toFixed(3)

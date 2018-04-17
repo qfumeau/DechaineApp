@@ -54,7 +54,7 @@ export default class ModalInfos extends React.Component {
           onRequestClose={() => this.setState({ modalVisible: false })}
         >
           <ImageBackground
-            source={require('../../img/Infos.png')}
+            source={require('../../img/infos2.png')}
             imageStyle={{ resizeMode: 'cover' }}
             style={{
               width: viewportWidth,
@@ -76,7 +76,7 @@ export default class ModalInfos extends React.Component {
                 </Text>
                 <View style={{flexDirection:'row'}}>
                   <Button title='Merci !' onPress={()=>this.setState({modalVisible:false})} color='grey'/>
-                  <Button title='Reset Données' onPress={()=>this.resetData()}/>
+                  <Button title='Reset Données' style={{marginLeft:"5%"}} onPress={()=>this.resetData()}/>
                 </View>
             </View>
             </View>

@@ -21,8 +21,8 @@ import RecupMdpModal from '../Composants/Modaux/recupMdpModal.js';
 import timer from 'react-native-timer';
 import * as firebase from 'firebase';
 
-const adresseMailText = 'quentin.fumeau@hotmail.fr';
-const mdp = '123456';
+const adresseMailText = 'quentin.fumeau@gmail.com';
+const mdp = '1234567';
 const FireBase = require('../ConnexionBD.js');
 
 class LoginScreen extends React.Component {
