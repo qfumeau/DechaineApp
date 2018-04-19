@@ -18,8 +18,8 @@ import RecupMdpModal from '../Composants/Modaux/recupMdpModal.js';
 import timer from 'react-native-timer';
 import * as firebase from 'firebase';
 
-const adresseMailText = 'quentin.fumeau@gmail.com';
-const mdp = '123456';
+const adresseMailText = '';
+const mdp = '';
 //charge la base de données
 const FireBase = require('../ConnexionBD.js');
 
@@ -29,8 +29,8 @@ class LoginScreen extends React.Component {
   };
   //vide des les champs pour que lors d'une déconnexion on ne puisse pas se reconnecter sans les reremplir
   componentWillMount() {
-    /*adresseMailText="";
-    mdp=""*/
+    adresseMailText="";
+    mdp=""
   }
   constructor(props) {
     super(props);
