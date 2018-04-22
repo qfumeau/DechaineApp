@@ -75,10 +75,9 @@ class LockScreen extends React.Component {
         .auth()
         .signOut()
         .then(function() {
-          console.log('on se casse');
         })
         .catch(function(error) {
-          console.log(error);
+          alert.log(error);
         });
     });
   }
@@ -215,7 +214,7 @@ class LockScreen extends React.Component {
               <MapView.Marker
                 coordinate={markerPosition}
                 title={'Mon vélo'}
-                description={'Potision de votre vélo'}
+                description={'Position de votre vélo'}
               />
             </MapView>
           )) || (

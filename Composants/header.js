@@ -125,7 +125,7 @@ export default class Header extends React.Component {
                 associées au mouvement du vélo.{'\n'}
                 Vous pouvez également changer votre mot de passe,{'\n'}
                 consulter les informations de calcul des statistiques{'\n'}
-                ou bien nous quitter en supprimant définitivement votre comtpe.
+                ou bien nous quitter en supprimant définitivement votre compte.
               </Text>
 
               <Button

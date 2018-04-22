@@ -37,10 +37,9 @@ class ParamScreen extends React.Component {
       .auth()
       .signOut()
       .then(function() {
-        console.log('on se casse');
       })
       .catch(function(error) {
-        console.log(error);
+        alert.log(error);
       });
   }
   //permet d'afficher une alerte demandant à l'utilisateur une confirmation de déconnexion
@@ -62,7 +61,7 @@ class ParamScreen extends React.Component {
   //permet de supprimer un compte
   supprAccount() {
     Alert.alert(
-      'Déconnexion',
+      'Suppression',
       'Vous êtes sur le point de supprimer votre compte.\nCette opération est irréversible\nEt entraînera la perte de toutes vos données\nVoulez-vous continuer ?',
       [
         { text: 'Annuler' },

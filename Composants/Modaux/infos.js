@@ -84,14 +84,14 @@ export default class ModalInfos extends React.Component {
                   sur la production moyenne de Co2 d'un véhicule en France.
                 </Text>
                 <View style={{ flexDirection: 'row' }}>
-                  <View style={{ width: '35%', marginLeft: '2%' }}>
+                  <View style={{ width: '35%', marginRight: '2%' }}>
                     <Button
                       title="Reset Data"
                       style={{ marginLeft: '5%' }}
                       onPress={() => this.resetData()}
                     />
                   </View>
-                  <View style={{ width: '35%', marginRight: '2%' }}>
+                  <View style={{ width: '35%', marginLeft: '2%' }}>
                     <Button
                       title="Merci !"
                       onPress={() => this.setState({ modalVisible: false })}

@@ -13,7 +13,7 @@ module.exports = StyleSheet.create({
   },
   container3: {
     height: 50,
-    width: 50,
+    width: '14%',
     backgroundColor: 'green',
     opacity: 0.8
   },

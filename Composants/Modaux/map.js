@@ -53,7 +53,7 @@ export default class Map extends React.Component {
                 coordinate={this.props.positionMarker}
                 image={require('../../img/markerBike.png')}
                 title={'Mon vélo'}
-                description={'Potision de votre vélo'}
+                description={'Position de votre vélo'}
               />
             </MapView>
             <TouchableHighlight

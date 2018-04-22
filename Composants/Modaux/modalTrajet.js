@@ -130,29 +130,31 @@ export default class ModalTrajet extends React.Component {
   //Vérification de l'existance d'un autre trajet relatif à la date actuelle
   existData() {
     if (this.props.trajets) {
-      for (let i = 0; i < this.props.trajets.length; i++) {
+      for (let i = 0; i < this.props.cle.length; i++) {
+        //Convertit la date de firebase sous forme objet date javascript
+        let laDate=new Date(this.props.trajets[this.props.cle[i]].day)
         //vérifie que l'année existe
         if (
           toDay.getFullYear() ==
-          this.props.trajets[this.props.cle[i]].getFullYear()
+          laDate.getFullYear()
         ) {
           //vérifie que le mois existe
           if (
-            toDay.getMonth() == this.props.trajets[this.props.cle[i]].getMonth()
+            toDay.getMonth() == laDate.getMonth()
           ) {
             moisEx = true;
             //vérifie que c'est le même jour
             if (
-              toDay.getDate() == this.props.trajets[this.props.cle[i]].getDate()
+              toDay.getDate() == laDate.getDate()
             ) {
               jourEx = true;
             }
             //vérifie que c'est la même semaine
             if (
               toDay.getDate() - 7 <
-                this.props.trajets[this.props.cle[i]].getDate() ||
+                laDate.getDate() ||
               toDay.getDate() + 7 >
-                this.props.trajets[this.props.cle[i]].getDate()
+                laDate.getDate()
             ) {
               semaineEx = true;
             }
